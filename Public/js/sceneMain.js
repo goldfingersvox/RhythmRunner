@@ -1,63 +1,192 @@
-class SceneMain extends Phaser.Scene {
-    constructor() {
-        super('SceneMain');
-    }
-    preload() {
-        this.load.image('background1_clouds_1', '../assets/background/background1_clouds_1.png');
-        this.load.image('background1_clouds_2', '../assets/background/background1_clouds_2.png');
-        this.load.image('background1_clouds_3', '../assets/background/background1_clouds_3.png');
-        this.load.image('background1_clouds_4', '../assets/background/background1_clouds_4.png');
-        this.load.image('background1_rocks_1', '../assets/background/background1_rocks_1.png');
-        this.load.image('background1_rocks_2', '../assets/background/background1_rocks_2.png');
-        this.load.image('background1_sky', '../assets/background/background1_sky.png');
-    }
 
-    create() {
 
-        // Get the window sizes
-        let windowWidth = window.innerWidth;
-        let windowHeight = window.innerHeight;
+$(document).on("click","#gameStart", function(){
+    console.log(result)
+    //global background object
+let background={};
 
-        // Find the center of the top space
-        let topBackgroundXOrigin = windowWidth / 2;
-        let topBackgroundYOrigin = (windowHeight / 5) * 1.5;
-        let topBackgroundHeight = (windowHeight / 5) * 3;
+//global character object
+let roxy={};
+
+//global grounds object
+let grounds;
+
+let health=0;
+
+let timedEvent;
+
+let ups;
+
+let downs;
+
+let lefts;
+
+let rights;
+
+let gameScene = {
+
+        preload() {
+
+        ///loading the background 
+        this.load.image('background', '../public/assets/background/seamless-pattern-1.jpg');
+        //loading ground image
+        this.load.image("ground", "../public/assets/ground.png");
+        //loading the main protagonist and the JSON attached to her with all the info about the spritesheet
+        this.load.atlas('roxy', '../public/assets/sprites/roxy.png', '../public/assets/sprites/roxy.json');
+        //loading in the the enemies you need to press to defeat!
+        this.load.image('up', '../public/assets/d-pad up.png')
+        this.load.image('left', '../public/assets/d-pad left.png')
+        this.load.image('down', '../public/assets/d-pad down.png')
+        this.load.image('right', '../public/assets/d-pad right.png')
+
+    },
+
+     create:function() {
+
+
+        //placing the background as a repeating tile
+        background = this.add.tileSprite(0, -30, config.width, config.height, "background").setOrigin(0);
+
+        //console.log(config.height)
+
+        //adding in main character
+        roxy=this.physics.add.sprite(100, 390, 'roxy')
+
+        grounds=this.physics.add.staticGroup()
         
-        // Base width and height of the images
-        let imageBaseWidth = 1920;
-        let imageBaseHeight = 1080;
-        let heightRatio = topBackgroundHeight / imageBaseHeight;
+        grounds.create(550,860, 'ground')
 
-        // Add the sky image at the right location and resize it to take all the space, no scaling needed
-        let skyImage = this.add.image(topBackgroundXOrigin, topBackgroundYOrigin, 'background1_sky');
-        skyImage.setDisplaySize(windowWidth, topBackgroundHeight);
-
-        // Add each layer one by one
-        this.cloud1 = this.add.tileSprite(topBackgroundXOrigin, topBackgroundYOrigin, imageBaseWidth, imageBaseHeight, 'background1_clouds_1');
-        this.cloud1.setScale(heightRatio);
-
-        this.cloud2 = this.add.tileSprite(topBackgroundXOrigin, topBackgroundYOrigin, imageBaseWidth, imageBaseHeight, 'background1_clouds_2');
-        this.cloud2.setScale(heightRatio);
         
-        this.rocks1 = this.add.tileSprite(topBackgroundXOrigin, topBackgroundYOrigin, imageBaseWidth, imageBaseHeight, 'background1_rocks_1');
-        this.rocks1.setScale(heightRatio);
-        
-        this.cloud3 = this.add.tileSprite(topBackgroundXOrigin, topBackgroundYOrigin, imageBaseWidth, imageBaseHeight, 'background1_clouds_3');
-        this.cloud3.setScale(heightRatio);
-        
-        this.rocks2 = this.add.tileSprite(topBackgroundXOrigin, topBackgroundYOrigin, imageBaseWidth, imageBaseHeight, 'background1_rocks_2');
-        this.rocks2.setScale(heightRatio);
+        //giving her some physics(bounce and making sure she doesn't go off screen)
+        roxy.setBounce(0.2);
+        roxy.setCollideWorldBounds(true);
 
-        this.cloud4 = this.add.tileSprite(topBackgroundXOrigin, topBackgroundYOrigin, imageBaseWidth, imageBaseHeight, 'background1_clouds_4');
-        this.cloud4.setScale(heightRatio);
+        //getting main player's running animation frames
+
+        frameNamesRoxyRun = this.anims.generateFrameNames("roxy", {
+            start: 0, end: 17, zeroPad: 3,
+            prefix: 'Running_', suffix: '.png'
+        });
+
+        //console.log(frameNamesRoxyRun)
+
+        //running animation creator
+
+        this.anims.create({
+            key: 'run',
+            frames: frameNamesRoxyRun,
+            frameRate: 30,
+            repeat: -1
+        });
+
+        //calling on the animation
+        roxy.anims.play('run');
+
+        //creating all the enemy groups
+        ups=this.physics.add.group();
+        downs=this.physics.add.group();
+        rights=this.physics.add.group();
+        lefts=this.physics.add.group();
+
+        
+
+        timedEvent = this.time.addEvent({
+            delay: 500,
+            callback: gameScene.createDowns,
+            callbackScope: this,
+            loop: false
+        })
+
+        timedEvent = this.time.addEvent({
+            delay: 1500,
+            callback: gameScene.createUps,
+            callbackScope: this,
+            loop: false
+        })
+
+        
+        //this.physics.add.collider(roxy, grounds);
+        this.physics.add.collider(downs, grounds);
+        this.physics.add.collider(ups, grounds);
+        
+
+
+
+    },
+
+        
+   
+
+    
+
+    update:function() {
+
+        downs.allowGravity = false;
+
+        roxy.setVelocityY(200)
+
+        ups.setVelocityX(-500)
+        downs.setVelocityX(-500)
+        rights.setVelocityX(-100)
+        lefts.setVelocityX(-100)
+        //making the background scroll automatically 
+        background.tilePositionX += 8;
+        //ground.tilePositionXX+=8
+    },
+
+    //this function creates up baddies
+     createUps:function() {
+        let up=ups.create(config.width-10, 440, 'up');
+        up.setCollideWorldBounds(false);
+        up.allowGravity = false;
+    },
+
+    //this function creates down baddies
+    createDowns:function() {
+        let down=downs.create(config.width+10, 300, 'down');
+        down.setCollideWorldBounds(false);
+        down.allowGravity = false;
+    },
+
+    //this function creates right baddies
+    createRights:function() {
+        let right=rights.create(config.width+10, 400, 'right');
+        right.setCollideWorldBounds(false);
+        right.allowGravity = true;
+    },
+
+    //this function creates left baddies
+    createLefts:function() {
+        let left=lefts.create(config.width+10, 400, 'left');
+        left.setCollideWorldBounds(false);
+        left.allowGravity = true;
     }
 
-    update() {
-        this.cloud1.tilePositionX += 0.05;
-        this.cloud2.tilePositionX += 0.05;
-        this.rocks1.tilePositionX += 0.10;
-        this.cloud3.tilePositionX += 0.15;
-        this.rocks2.tilePositionX += 0.20;
-        this.cloud4.tilePositionX += 0.30;
-    }
 }
+
+var config = {
+
+    type: Phaser.AUTO,
+    width: 1100,
+    height: 500,
+    physics: {
+        default: 'arcade',
+        arcade: {
+            debug: false
+        }
+    },
+    scene: [gameScene]
+    };
+
+    var game = new Phaser.Game(config);   
+
+})
+
+
+
+    
+
+
+    
+
+  
