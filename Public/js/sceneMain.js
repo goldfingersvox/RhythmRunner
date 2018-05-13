@@ -1,24 +1,8 @@
-//basic config object sets the rules for the whole game
 
-var config = {
 
-    type: Phaser.AUTO,
-    width: 1100,
-    height: 500,
-    physics: {
-        default: 'arcade',
-        arcade: {
-            gravity: { y: 300 },
-            debug: false
-        }
-    },
-    scene: {
-        preload: preload,
-        create: create,
-        update: update
-    }
-    };
-//global background object
+$(document).on("click","#gameStart", function(){
+    console.log(result)
+    //global background object
 let background={};
 
 //global character object
@@ -39,26 +23,25 @@ let lefts;
 
 let rights;
 
-//constructor creates the game!
-var game = new Phaser.Game(config);   
+let gameScene = {
 
-    function preload() {
+        preload() {
 
         ///loading the background 
         this.load.image('background', '../public/assets/background/seamless-pattern-1.jpg');
         //loading ground image
-        this.load.image("ground", "../public/assets/ground.jpg");
+        this.load.image("ground", "../public/assets/ground.png");
         //loading the main protagonist and the JSON attached to her with all the info about the spritesheet
-        this.load.atlas('roxy', '../public/assets/sprites/Roxy.png', '../public/assets/sprites/Roxy.json');
+        this.load.atlas('roxy', '../public/assets/sprites/roxy.png', '../public/assets/sprites/roxy.json');
         //loading in the the enemies you need to press to defeat!
         this.load.image('up', '../public/assets/d-pad up.png')
         this.load.image('left', '../public/assets/d-pad left.png')
         this.load.image('down', '../public/assets/d-pad down.png')
         this.load.image('right', '../public/assets/d-pad right.png')
 
-    }
+    },
 
-    function create() {
+     create:function() {
 
 
         //placing the background as a repeating tile
@@ -67,16 +50,16 @@ var game = new Phaser.Game(config);
         //console.log(config.height)
 
         //adding in main character
-        roxy=this.physics.add.sprite(100, 350, 'roxy')
+        roxy=this.physics.add.sprite(100, 390, 'roxy')
 
         grounds=this.physics.add.staticGroup()
         
-        grounds.create(550,900, 'ground').setScale(3)
+        grounds.create(550,860, 'ground')
+
         
         //giving her some physics(bounce and making sure she doesn't go off screen)
         roxy.setBounce(0.2);
-
-        this.physics.add.collider(roxy, grounds);
+        roxy.setCollideWorldBounds(true);
 
         //getting main player's running animation frames
 
@@ -106,77 +89,102 @@ var game = new Phaser.Game(config);
         lefts=this.physics.add.group();
 
         
-        //this.physics.add.collider(ground, ups);
-        //this.physics.add.collider(ups, downs);
-        //this.physics.add.collider(ground, rights);
-        //this.physics.add.collider(ground, lefts);
 
-        this.physics.add.collider(downs, grounds);
-
-        /*timedEvent = this.time.addEvent({
+        timedEvent = this.time.addEvent({
             delay: 500,
-            callback: createDowns,
+            callback: gameScene.createDowns,
             callbackScope: this,
-            loop: true
-        })*/
+            loop: false
+        })
 
+        timedEvent = this.time.addEvent({
+            delay: 1500,
+            callback: gameScene.createUps,
+            callbackScope: this,
+            loop: false
+        })
+
+        
+        //this.physics.add.collider(roxy, grounds);
         this.physics.add.collider(downs, grounds);
-
-
-
-        createDowns();
-
+        this.physics.add.collider(ups, grounds);
         
 
 
-    }
+
+    },
 
         
    
 
     
 
-    function update() {
+    update:function() {
 
+        downs.allowGravity = false;
 
+        roxy.setVelocityY(200)
 
-        ups.setVelocityX(-100)
+        ups.setVelocityX(-500)
         downs.setVelocityX(-500)
         rights.setVelocityX(-100)
         lefts.setVelocityX(-100)
         //making the background scroll automatically 
         background.tilePositionX += 8;
         //ground.tilePositionXX+=8
-    }
+    },
 
     //this function creates up baddies
-    function createUps() {
-        let up=ups.create(config.width-10, 400, 'up');
+     createUps:function() {
+        let up=ups.create(config.width-10, 440, 'up');
         up.setCollideWorldBounds(false);
-        up.allowGravity = true;
-    }
+        up.allowGravity = false;
+    },
 
     //this function creates down baddies
-    function createDowns() {
-        let down=downs.create(config.width+10, 380, 'down');
+    createDowns:function() {
+        let down=downs.create(config.width+10, 300, 'down');
         down.setCollideWorldBounds(false);
         down.allowGravity = false;
-    }
+    },
 
     //this function creates right baddies
-    function createRights() {
+    createRights:function() {
         let right=rights.create(config.width+10, 400, 'right');
         right.setCollideWorldBounds(false);
         right.allowGravity = true;
-    }
+    },
 
     //this function creates left baddies
-    function createLefts() {
+    createLefts:function() {
         let left=lefts.create(config.width+10, 400, 'left');
         left.setCollideWorldBounds(false);
         left.allowGravity = true;
     }
 
+}
+
+var config = {
+
+    type: Phaser.AUTO,
+    width: 1100,
+    height: 500,
+    physics: {
+        default: 'arcade',
+        arcade: {
+            debug: false
+        }
+    },
+    scene: [gameScene]
+    };
+
+    var game = new Phaser.Game(config);   
+
+})
+
+
+
+    
 
 
     
