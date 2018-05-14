@@ -1,10 +1,8 @@
 var express = require("express");
-var formidable = require("formidable")
 var router = express.Router();
 var path=require("path")
 var router = express.Router();
 var fs=require("fs")
-const fileUpload = require('express-fileupload');
 var multer= require("multer")
 //instructing multer where and how to save files
 var storage = multer.diskStorage({
