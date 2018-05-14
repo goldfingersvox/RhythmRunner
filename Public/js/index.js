@@ -7,7 +7,7 @@ var config = {
     messagingSenderId: "575687161188"
   };
   firebase.initializeApp(config);
-
+//get melody starts here
 let storage = firebase.app().storage
 let storageRef = firebase.storage().ref();
 let result;
@@ -19,6 +19,7 @@ let highMid=0;
 let lowMid=0;
 let notePitchArr=[]
 let song;
+let bpmArr;
 window.onload = function() {
 //uploading the user's song to firebase
     let fileButton =$("#song")
@@ -34,7 +35,6 @@ window.onload = function() {
 
             storageRef.getDownloadURL().then(function(url){
                 song=url
-                parameters['input_file'] = song;
 
             })
 
@@ -52,8 +52,10 @@ var taskUrl = 'analyze/melody';
 var parameters = { blocking: false, format: 'json', access_id: accessId };
 
 
-//changing the API paramaters and adding in the song uploaded to firebase.
-parameters['detailed_result'] = 'true';
+//changing the API paramaters and adding in the song (hardcoded for now).
+parameters['detailed_result'] = 'false';
+parameters['input_file'] = "https://s1.vocaroo.com/media/download_temp/Vocaroo_s1Zf5DxjkHnz.mp3";
+
     
 function onTaskStarted(data) {
     var fileId = data.file.file_id;
@@ -122,3 +124,54 @@ $(document).ready(function() {
 });
  
   };
+
+var accessId2 = 'ca88977b-8027-4906-b6c6-8c2a10948caf';
+var taskUrl2 = 'analyze/tempo';
+var parameters2 = { blocking: false, format: 'json', access_id: accessId2 };
+
+// the values for these parameters were taken from the corresponding controls in the demo form
+parameters2['input_file'] = 'https://s1.vocaroo.com/media/download_temp/Vocaroo_s1Zf5DxjkHnz.mp3';
+    
+function onTaskStarted(data) {
+    var fileId2 = data.file.file_id;
+    
+    // request task progress every 500ms
+    var polling2 = setInterval(pollTaskProgress, 500);
+   
+    function pollTaskProgress() {
+        $.ajax({ url: 'https://api.sonicAPI.com/file/status?file_id=' + fileId2 + '&access_id=' + accessId2 + '&format=json', 
+                 crossDomain: true, success: function(data) {
+            if (data.file.status == 'ready') {
+                onTaskSucceeded(fileId2);
+                clearInterval(polling2);
+            } else if (data.file.status == 'working') {
+                $('#result').text(data.file.progress + '% done');
+            }
+        }});
+    }
+}
+
+function onTaskSucceeded(fileId2) {
+    var downloadUrl2 = 'https://api.sonicAPI.com/file/download?file_id=' + fileId2 + '&access_id=' + accessId2 + '&format=json';
+    
+    $.ajax({ url: downloadUrl2, crossDomain: true, success: function(data) {
+        console.log(data.auftakt_result.click_marks);
+        bpmArr=data.auftakt_result.click_marks
+    }});
+}
+
+function onTaskFailed(response) {
+    var data = $.parseJSON(response.responseText);
+    var errorMessages = data.errors.map(function(error) { return error.message; });
+ 
+    $('#result').text('Task failed, reason: ' + errorMessages.join(','));
+}
+
+// start task when clicking on the "Start task" button
+$(document).ready(function() {
+    $('#start').click(function() {
+    	// execute an HTTP GET using the task's URL, the parameters and callback functions defined above
+        $.ajax({ url: 'https://api.sonicAPI.com/' + taskUrl2, data: parameters2, 
+                 success: onTaskStarted, error: onTaskFailed, crossDomain: true });
+    });
+});

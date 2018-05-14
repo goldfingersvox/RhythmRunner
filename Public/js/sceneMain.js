@@ -1,4 +1,6 @@
 
+//starting score
+let score=0;
 
 $(document).on("click","#gameStart", function(){
     console.log(result)
@@ -10,19 +12,30 @@ let roxy={};
 
 //global grounds object
 let grounds;
+//starting health
+let health=100;
 
-let health=0;
-
+//some more global vasrs the game needs
 let timedEvent;
 
 let ups;
 
 let downs;
 
+let checker;
+
 let lefts;
 
 let rights;
 
+let cursors;
+
+let music;
+//the boot scene
+let boot ={
+
+}
+//the main game scene
 let gameScene = {
 
         preload() {
@@ -32,12 +45,16 @@ let gameScene = {
         //loading ground image
         this.load.image("ground", "../public/assets/ground.png");
         //loading the main protagonist and the JSON attached to her with all the info about the spritesheet
-        this.load.atlas('roxy', '../public/assets/sprites/roxy.png', '../public/assets/sprites/roxy.json');
+        this.load.atlas('roxy', '../public/assets/sprites/roxy.png',"../public/assets/sprites/roxy.json");
+        //loading in the checker to check for the score
+        this.load.image("checker", "../public/assets/sprites/roxy-run.png")
         //loading in the the enemies you need to press to defeat!
         this.load.image('up', '../public/assets/d-pad up.png')
         this.load.image('left', '../public/assets/d-pad left.png')
         this.load.image('down', '../public/assets/d-pad down.png')
         this.load.image('right', '../public/assets/d-pad right.png')
+        //load the song (hardcoaded for now)
+        this.load.audio('song', '../public/assets/The Prodigy - Invaders Must Die [HQ] High Quality Sound.mp3')
 
     },
 
@@ -52,6 +69,9 @@ let gameScene = {
         //adding in main character
         roxy=this.physics.add.sprite(100, 390, 'roxy')
 
+        //adding in the checker that will know if we miss one
+        checker=this.physics.add.sprite(-25,390, 'checker')
+
         grounds=this.physics.add.staticGroup()
         
         grounds.create(550,860, 'ground')
@@ -61,17 +81,14 @@ let gameScene = {
         roxy.setBounce(0.2);
         roxy.setCollideWorldBounds(true);
 
+
         //getting main player's running animation frames
-
-        frameNamesRoxyRun = this.anims.generateFrameNames("roxy", {
+        let frameNamesRoxyRun = this.anims.generateFrameNames("roxy", {
             start: 0, end: 17, zeroPad: 3,
-            prefix: 'Running_', suffix: '.png'
-        });
-
-        //console.log(frameNamesRoxyRun)
+            prefix:"Running_", suffix: ".png"
+        })
 
         //running animation creator
-
         this.anims.create({
             key: 'run',
             frames: frameNamesRoxyRun,
@@ -79,56 +96,142 @@ let gameScene = {
             repeat: -1
         });
 
-        //calling on the animation
-        roxy.anims.play('run');
+        //getting main player's slashing animation frames
+        let frameNamesRoxySlash = this.anims.generateFrameNames("roxy", {
+            start: 0, end: 17, zeroPad: 3,
+            prefix:"Run Slashing_", suffix: ".png"
+        })
 
-        //creating all the enemy groups
+        //slashing animation creator
+        this.anims.create({
+            key: 'slash',
+            frames: frameNamesRoxySlash,
+            frameRate: 50,
+            repeat: 0
+        });
+
+        //creating all the enemy and obsticle groups
         ups=this.physics.add.group();
         downs=this.physics.add.group();
         rights=this.physics.add.group();
         lefts=this.physics.add.group();
 
-        
-
         timedEvent = this.time.addEvent({
-            delay: 500,
-            callback: gameScene.createDowns,
+            delay: ((noteArr[0].onset_time)*1000)+1500,
+            callback: gameScene.playSong,
             callbackScope: this,
             loop: false
         })
 
+        //this conditional creates the first note
+        if (noteArr[0].midi_pitch>highMid)
         timedEvent = this.time.addEvent({
-            delay: 1500,
+            delay: (noteArr[0].onset_time)*1000,
             callback: gameScene.createUps,
             callbackScope: this,
             loop: false
         })
 
+        else if (noteArr[0].midi_pitch>noteAvg&&noteArr[0].midi_pitch<highMid)
+        timedEvent = this.time.addEvent({
+            delay: (noteArr[0].onset_time)*1000,
+            callback: gameScene.createRights,
+            callbackScope: this,
+            loop: false
+        })
+
+        else if (noteArr[0].midi_pitch<noteAvg&&noteArr[0].midi_pitch>lowMid)
+        timedEvent = this.time.addEvent({
+            delay: (noteArr[0].onset_time)*1000,
+            callback: gameScene.createLefts,
+            callbackScope: this,
+            loop: false
+        })
+        else if (noteArr[0].midi_pitch<lowMid)
+        timedEvent = this.time.addEvent({
+            delay: (noteArr[0].onset_time)*1000,
+            callback: gameScene.createDowns,
+            callbackScope: this,
+            loop: false
+        })
+
+        let j;
         
-        //this.physics.add.collider(roxy, grounds);
+        //this loop creates the enemies from the song information sent back from the API
+        for (j=0;j<noteArr.length;j+=3){
+            if (noteArr[j].midi_pitch>highMid)
+            timedEvent = this.time.addEvent({
+                delay: (noteArr[j].onset_time)*1000,
+                callback: gameScene.createUps,
+                callbackScope: this,
+                loop: false
+            })
+
+            else if (noteArr[j].midi_pitch>noteAvg&&noteArr[j].midi_pitch<highMid)
+            timedEvent = this.time.addEvent({
+                delay: (noteArr[j].onset_time)*1000,
+                callback: gameScene.createRights,
+                callbackScope: this,
+                loop: false
+            })
+
+            else if (noteArr[j].midi_pitch<noteAvg&&noteArr[j].midi_pitch>lowMid)
+            timedEvent = this.time.addEvent({
+                delay: (noteArr[j].onset_time)*1000,
+                callback: gameScene.createLefts,
+                callbackScope: this,
+                loop: false
+            })
+            else if (noteArr[j].midi_pitch<lowMid)
+            timedEvent = this.time.addEvent({
+                delay: (noteArr[j].onset_time)*1000,
+                callback: gameScene.createDowns,
+                callbackScope: this,
+                loop: false
+            })
+            //associating cursors variable with the keyboard cursors
+            cursors = this.input.keyboard.createCursorKeys();
+
+            //playing the run animation
+            roxy.anims.play('run', true);
+
+        }
+
+
+        //making sure all objects collide with the ground
         this.physics.add.collider(downs, grounds);
         this.physics.add.collider(ups, grounds);
+        this.physics.add.collider(downs, grounds);
+        this.physics.add.collider(roxy, grounds);
+
+
+        //these overlaps help determine if the player hits the enemies on time
+        this.physics.add.overlap(roxy, ups, gameScene.hitUp, null, this);
+        this.physics.add.overlap(roxy, downs, gameScene.hitDown, null, this);
+        this.physics.add.overlap(roxy, lefts, gameScene.hitLeft, null, this);
+        this.physics.add.overlap(roxy, rights, gameScene.hitRight, null, this);
+
+        //these overlaps help determine if the player loses health since the enemies got past them
+        this.physics.add.overlap(checker, rights, gameScene.hit, null, this);
+        this.physics.add.overlap(checker, downs, gameScene.hit, null, this);
+        this.physics.add.overlap(checker, lefts, gameScene.hit, null, this);
+        this.physics.add.overlap(checker, rights, gameScene.hit, null, this);
+
         
 
 
 
     },
 
-        
-   
-
-    
-
     update:function() {
 
-        downs.allowGravity = false;
-
-        roxy.setVelocityY(200)
-
+        //making sure roxy keeps running
+        roxy.anims.play('run', true);
+        //giving all enemies a velocity to travel across the screen
         ups.setVelocityX(-500)
         downs.setVelocityX(-500)
-        rights.setVelocityX(-100)
-        lefts.setVelocityX(-100)
+        rights.setVelocityX(-500)
+        lefts.setVelocityX(-500)
         //making the background scroll automatically 
         background.tilePositionX += 8;
         //ground.tilePositionXX+=8
@@ -136,14 +239,14 @@ let gameScene = {
 
     //this function creates up baddies
      createUps:function() {
-        let up=ups.create(config.width-10, 440, 'up');
+        let up=ups.create(config.width+10, 400, 'up');
         up.setCollideWorldBounds(false);
         up.allowGravity = false;
     },
 
     //this function creates down baddies
     createDowns:function() {
-        let down=downs.create(config.width+10, 300, 'down');
+        let down=downs.create(config.width+10, 400, 'down');
         down.setCollideWorldBounds(false);
         down.allowGravity = false;
     },
@@ -160,6 +263,69 @@ let gameScene = {
         let left=lefts.create(config.width+10, 400, 'left');
         left.setCollideWorldBounds(false);
         left.allowGravity = true;
+    }, 
+    //all of these functions control what happenes if the player presses on a button to kill an enemy
+    hitLeft:function(roxy, left)
+    {
+        if(cursors.left.isDown){
+            roxy.anims.play('slash', true);
+            score+=100
+            left.disableBody(true,true)
+        }
+        else{
+            roxy.anims.play('run', true);
+        }
+    },
+
+    hitRight:function (roxy, right)
+    {
+        if(cursors.right.isDown){
+            roxy.anims.play('slash', true);
+            score+=100
+            right.disableBody(true,true)
+
+        }
+        else{
+            roxy.anims.play('run', true);
+        }
+
+    
+    },
+
+    hitUp:function (roxy, up)
+    {
+        if(cursors.up.isDown){
+            roxy.anims.play('slash', true);
+            score+=100
+            up.disableBody(true,true)
+
+        }
+        else{
+            roxy.anims.play('run', true);
+        }
+    },
+
+    hitDown:function (roxy, down)
+    {
+        if(cursors.down.isDown){
+            roxy.anims.play('slash', true);
+            score+=100
+            down.disableBody(true,true)
+
+        }
+        else{
+            roxy.anims.play('run', true);
+        }
+    },
+    //this function is called if player misses an enemy
+    hit:function ()
+    {
+        health=-10
+    },
+    //this function plays the song
+    playSong: function(){
+        music=this.sound.add('song');
+        music.play();
     }
 
 }
