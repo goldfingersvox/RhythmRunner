@@ -41,20 +41,20 @@ let gameScene = {
         preload() {
 
         ///loading the background 
-        this.load.image('background', '../public/assets/background/seamless-pattern-1.jpg');
+        this.load.image('background', '/assets/background/seamless-pattern-1.jpg');
         //loading ground image
-        this.load.image("ground", "../public/assets/ground.png");
+        this.load.image("ground", "/assets/ground.png");
         //loading the main protagonist and the JSON attached to her with all the info about the spritesheet
-        this.load.atlas('roxy', '../public/assets/sprites/roxy.png',"../public/assets/sprites/roxy.json");
+        this.load.atlas('roxy', '/assets/sprites/roxy.png',"/assets/sprites/roxy.json");
         //loading in the checker to check for the score
-        this.load.image("checker", "../public/assets/sprites/roxy-run.png")
+        this.load.image("checker", "/assets/sprites/roxy-run.png")
         //loading in the the enemies you need to press to defeat!
-        this.load.image('up', '../public/assets/d-pad up.png')
-        this.load.image('left', '../public/assets/d-pad left.png')
-        this.load.image('down', '../public/assets/d-pad down.png')
-        this.load.image('right', '../public/assets/d-pad right.png')
+        this.load.image('up', '/assets/d-pad up.png')
+        this.load.image('left', '/assets/d-pad left.png')
+        this.load.image('down', '/assets/d-pad down.png')
+        this.load.image('right', '/assets/d-pad right.png')
         //load the song (hardcoaded for now)
-        this.load.audio('song', '../public/assets/The Prodigy - Invaders Must Die [HQ] High Quality Sound.mp3')
+        this.load.audio('song', '/assets/The Prodigy - Invaders Must Die [HQ] High Quality Sound.mp3')
 
     },
 
@@ -162,7 +162,7 @@ let gameScene = {
 
         }
 
-        for(let z=0; z<beatArr.length; z=+2){
+        for(let z=0; z<beatArr.length; z+=2){
             if(beatArr[z].downbeat){
                 timedEvent = this.time.addEvent({
                     delay: (beatArr[z].time)*1000,

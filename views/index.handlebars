@@ -1,0 +1,18 @@
+
+	<div class="entry">
+  {{#if file}}
+    <h1>{{file.originalname}}</h1>
+	<input type="button" id="start" value="Start task" />
+	<div id="result" />
+  {{else}}
+	</div>
+
+    <form id='uploadForm' action='/upload' method='post'enctype="multipart/form-data">
+        <input type="file" name="song" />
+        <input type='submit' value='Upload!' />
+    </form>  
+	{{/if}}
+	
+
+
+
