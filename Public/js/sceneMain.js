@@ -54,7 +54,7 @@ let gameScene = {
         this.load.image('down', '/assets/d-pad down.png')
         this.load.image('right', '/assets/d-pad right.png')
         //load the song (hardcoaded for now)
-        this.load.audio('song', '/assets/The Prodigy - Invaders Must Die [HQ] High Quality Sound.mp3')
+        this.load.audio('song', '../'+songPath)
 
     },
 
