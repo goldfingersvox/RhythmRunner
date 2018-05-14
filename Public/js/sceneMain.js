@@ -107,7 +107,7 @@ let gameScene = {
             key: 'slash',
             frames: frameNamesRoxySlash,
             frameRate: 50,
-            repeat: 0
+            repeat: -1
         });
 
         //creating all the enemy and obsticle groups
@@ -117,49 +117,20 @@ let gameScene = {
         lefts=this.physics.add.group();
 
         timedEvent = this.time.addEvent({
-            delay: ((noteArr[0].onset_time)*1000)+1500,
+            delay: 1950,
             callback: gameScene.playSong,
             callbackScope: this,
             loop: false
         })
-
-        //this conditional creates the first note
-        if (noteArr[0].midi_pitch>highMid)
-        timedEvent = this.time.addEvent({
-            delay: (noteArr[0].onset_time)*1000,
-            callback: gameScene.createUps,
-            callbackScope: this,
-            loop: false
-        })
-
-        else if (noteArr[0].midi_pitch>noteAvg&&noteArr[0].midi_pitch<highMid)
-        timedEvent = this.time.addEvent({
-            delay: (noteArr[0].onset_time)*1000,
-            callback: gameScene.createRights,
-            callbackScope: this,
-            loop: false
-        })
-
-        else if (noteArr[0].midi_pitch<noteAvg&&noteArr[0].midi_pitch>lowMid)
-        timedEvent = this.time.addEvent({
-            delay: (noteArr[0].onset_time)*1000,
-            callback: gameScene.createLefts,
-            callbackScope: this,
-            loop: false
-        })
-        else if (noteArr[0].midi_pitch<lowMid)
-        timedEvent = this.time.addEvent({
-            delay: (noteArr[0].onset_time)*1000,
-            callback: gameScene.createDowns,
-            callbackScope: this,
-            loop: false
-        })
+    
 
         let j;
         
         //this loop creates the enemies from the song information sent back from the API
-        for (j=0;j<noteArr.length;j+=3){
-            if (noteArr[j].midi_pitch>highMid)
+        for (j=0;j<noteArr.length;j++){
+        //this conditional makes sure only above average volume notes are added
+        if(noteArr[j].volume>avgVol){
+            if (noteArr[j].midi_pitch>noteAvg)
             timedEvent = this.time.addEvent({
                 delay: (noteArr[j].onset_time)*1000,
                 callback: gameScene.createUps,
@@ -167,7 +138,7 @@ let gameScene = {
                 loop: false
             })
 
-            else if (noteArr[j].midi_pitch>noteAvg&&noteArr[j].midi_pitch<highMid)
+            else if (noteArr[j].midi_pitch>lowMid&&noteArr[j].midi_pitch<noteAvg)
             timedEvent = this.time.addEvent({
                 delay: (noteArr[j].onset_time)*1000,
                 callback: gameScene.createRights,
@@ -175,13 +146,6 @@ let gameScene = {
                 loop: false
             })
 
-            else if (noteArr[j].midi_pitch<noteAvg&&noteArr[j].midi_pitch>lowMid)
-            timedEvent = this.time.addEvent({
-                delay: (noteArr[j].onset_time)*1000,
-                callback: gameScene.createLefts,
-                callbackScope: this,
-                loop: false
-            })
             else if (noteArr[j].midi_pitch<lowMid)
             timedEvent = this.time.addEvent({
                 delay: (noteArr[j].onset_time)*1000,
@@ -189,14 +153,30 @@ let gameScene = {
                 callbackScope: this,
                 loop: false
             })
-            //associating cursors variable with the keyboard cursors
-            cursors = this.input.keyboard.createCursorKeys();
 
-            //playing the run animation
-            roxy.anims.play('run', true);
+        }
+        else{
 
         }
 
+
+        }
+
+        for(let z=0; z<beatArr.length; z=+2){
+            if(beatArr[z].downbeat){
+                timedEvent = this.time.addEvent({
+                    delay: (beatArr[z].time)*1000,
+                    callback: gameScene.createDowns,
+                    callbackScope: this,
+                    loop: false
+            })
+        }
+        }
+        //associating cursors variable with the keyboard cursors
+        cursors = this.input.keyboard.createCursorKeys();
+
+        //playing the run animation
+        roxy.anims.play('run', true);
 
         //making sure all objects collide with the ground
         this.physics.add.collider(downs, grounds);
@@ -217,16 +197,35 @@ let gameScene = {
         this.physics.add.overlap(checker, lefts, gameScene.hit, null, this);
         this.physics.add.overlap(checker, rights, gameScene.hit, null, this);
 
-        
+        //this overlap makes sure you don't get two enemies at once
+        this.physics.add.overlap(downs, ups, gameScene.limitUp, null, this);
+        this.physics.add.overlap(lefts, ups, gameScene.limitLeft, null, this);
+        this.physics.add.overlap(rights, ups, gameScene.limitRight, null, this);
 
 
 
     },
 
     update:function() {
+        //playing the slash animations
+        if(cursors.left.isDown){
+            roxy.anims.play('slash', true);
+        }
+        else if (cursors.right.isDown){
+            roxy.anims.play('slash', true);
+        }
+        else if (cursors.up.isDown){
+            roxy.anims.play('slash', true);
+        }
+        else if (cursors.down.isDown){
+            roxy.anims.play('slash', true);
+        }
+        else{
+            //making sure roxy keeps running
+            roxy.anims.play('run', true);
+        }
 
-        //making sure roxy keeps running
-        roxy.anims.play('run', true);
+
         //giving all enemies a velocity to travel across the screen
         ups.setVelocityX(-500)
         downs.setVelocityX(-500)
@@ -268,7 +267,6 @@ let gameScene = {
     hitLeft:function(roxy, left)
     {
         if(cursors.left.isDown){
-            roxy.anims.play('slash', true);
             score+=100
             left.disableBody(true,true)
         }
@@ -321,6 +319,15 @@ let gameScene = {
     hit:function ()
     {
         health=-10
+    },
+    limitUp: function(down, up){
+        down.disableBody(true,true)
+    } ,  
+    limitRight: function(down, right){
+        down.disableBody(true,true)
+    } , 
+    limitLeft: function(down, left){
+        down.disableBody(true,true)
     },
     //this function plays the song
     playSong: function(){
