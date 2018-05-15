@@ -1,6 +1,6 @@
 module.exports = function(sequelize, DataTypes){
   var Score = sequelize.define("Score", {
-    initieals: {
+    initials: {
       type: DataTypes.STRING,
         allowNull: false,
         validate: {
