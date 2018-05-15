@@ -231,10 +231,10 @@ let gameScene = {
         this.physics.add.overlap(roxy, rights, gameScene.hitRight, null, this);
 
         //these overlaps help determine if the player loses health since the enemies got past them
-        this.physics.add.overlap(checker, rights, gameScene.hit, null, this);
-        this.physics.add.overlap(checker, downs, gameScene.hit, null, this);
-        this.physics.add.overlap(checker, lefts, gameScene.hit, null, this);
-        this.physics.add.overlap(checker, rights, gameScene.hit, null, this);
+        this.physics.add.overlap(checker, rights, gameScene.loseHealthRight, null, this);
+        this.physics.add.overlap(checker, downs, gameScene.loseHealthDown, null, this);
+        this.physics.add.overlap(checker, lefts, gameScene.loseHealthLeft, null, this);
+        this.physics.add.overlap(checker, rights, gameScene.loseHealthRight, null, this);
 
         //this overlap makes sure you don't get two enemies at once
         this.physics.add.overlap(downs, ups, gameScene.limitUp, null, this);
@@ -357,16 +357,29 @@ let gameScene = {
         }
     },
     //this function is called if player misses an enemy
-    hit:function ()
+    loseHealthDown:function (checker,down)
     {
         health-=10
         healthText.setText('Health: ' + health);
         down.disableBody(true,true)
+    },
+    loseHealthUp:function (checker,up)
+    {
+        health-=10
+        healthText.setText('Health: ' + health);
         up.disableBody(true,true)
+    },
+    loseHealthLeft:function (checker,left)
+    {
+        health-=10
+        healthText.setText('Health: ' + health);
         left.disableBody(true,true)
+    },    
+    loseHealthRight:function (checker,right)
+    {
+        health-=10
+        healthText.setText('Health: ' + health);
         right.disableBody(true,true)
-
-
     },
     limitUp: function(down, up){
         down.disableBody(true,true)
