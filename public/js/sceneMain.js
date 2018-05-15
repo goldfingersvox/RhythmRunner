@@ -278,7 +278,7 @@ let gameScene = {
         //ground.tilePositionXX+=8
 
         if(health===0){
-          gameScene.gameOver();
+            this.scene.start('myGameOverScene')
         }
     },
 
@@ -403,7 +403,6 @@ let gameScene = {
         music.play();
     },
     gameOver: function(){
-        this.scene.start('myGameOverScene')
     }
 
 }
