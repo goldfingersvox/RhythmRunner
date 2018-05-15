@@ -399,9 +399,9 @@ let gameScene = {
         music=this.sound.add('song');
         music.play();
     },
-    //gameOver: function(){
-       // this.scene.get('gameOver')
-    //}
+    gameOver: function(){
+       this.scene.get('gameOver')
+    }
 
 }
 
