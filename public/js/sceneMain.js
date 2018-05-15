@@ -275,7 +275,7 @@ let gameScene = {
         //ground.tilePositionXX+=8
 
         if(health===0){
-            gameScene.gameOver();
+            //gameScene.gameOver();
         }
     },
 
