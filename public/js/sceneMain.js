@@ -274,9 +274,9 @@ let gameScene = {
         background.tilePositionX += 8;
         //ground.tilePositionXX+=8
 
-       // if(health===0){
-        //    gameScene.gameOver();
-       // }
+        if(health===0){
+          gameScene.gameOver();
+        }
     },
 
     //this function creates up baddies
@@ -436,7 +436,7 @@ var config = {
             debug: false
         }
     },
-    scene: [boot, gameScene, gameOver]
+    scene: [ gameScene, gameOver]
     };
 
     var game = new Phaser.Game(config);   
