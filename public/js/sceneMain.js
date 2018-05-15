@@ -294,13 +294,13 @@ let gameScene = {
         if(health===0){
             this.scene.start('myGameOverScene')
             music.stop();
-            highScore();
+            highScore(score);
         }
 
 
         if((j+1)==noteArr.length&&(z+1)==beatArr.length){
             let goodjobtext = this.add.text(500, 250, 'Song Over, Good Job!', { fontSize: '32px', fill: '#ffffff' });
-            highScore();
+            highScore(score);
         }
     },
 
@@ -479,11 +479,12 @@ function highScore(endScore){
 
 }
 
-let initials=$("#initials").val().trim();
-    
-let data= {name:initials,score:score};
+
 
 $(document).on("click", "#submitScore", function(){
+    let initials=$("#initials").val().trim();
+    
+    let data= {name:initials,score:score};
     
     $.ajax("/score", {
         type: "POST",
