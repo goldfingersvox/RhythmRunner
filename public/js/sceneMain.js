@@ -102,7 +102,7 @@ let gameScene = {
         roxy=this.physics.add.sprite(100, 390, 'roxy')
 
         //adding in the checker that will know if we miss one
-        checker=this.physics.add.sprite(-25,390, 'checker')
+        checker=this.physics.add.sprite(-75,390, 'checker')
 
         grounds=this.physics.add.staticGroup()
         
@@ -273,6 +273,10 @@ let gameScene = {
         //making the background scroll automatically 
         background.tilePositionX += 8;
         //ground.tilePositionXX+=8
+
+        if(health===0){
+            gameOver();
+        }
     },
 
     //this function creates up baddies
@@ -394,11 +398,30 @@ let gameScene = {
     playSong: function(){
         music=this.sound.add('song');
         music.play();
+    },
+    gameOver: function(){
+        this.scene.get('gameOver')
     }
 
 }
 
+let gameovertext;
 let gameOver= {
+    
+    preload:function(){
+
+    },
+
+    create:function(){
+
+    gameovertext = this.add.text(550, 250, 'Game Over', { fontSize: '32px', fill: '#000' });
+
+
+    },
+    update:function(){
+
+    }
+
 
 }
 
