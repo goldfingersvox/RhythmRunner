@@ -1,6 +1,8 @@
 
 //starting score
 let score=0;
+//starting health
+let health=100;
 
 $(document).on("click","#gameStart", function(){
     console.log(result)
@@ -12,8 +14,7 @@ let roxy={};
 
 //global grounds object
 let grounds;
-//starting health
-let health=100;
+
 
 //some more global vasrs the game needs
 let timedEvent;
@@ -113,7 +114,7 @@ let gameScene = {
         scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
 
         //loading in the text for the health
-        healthText = this.add.text(16, 26, 'health: 100', { fontSize: '32px', fill: '#000' });
+        healthText = this.add.text(16, 40, 'health: 100', { fontSize: '32px', fill: '#000' });
 
 
 
@@ -376,7 +377,7 @@ let gameScene = {
 }
 
 let gameOver= {
-    
+
 }
 
 var config = {
