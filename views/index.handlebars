@@ -2,25 +2,25 @@
 <div class="entry">
 <nav>
     <div class="nav-wrapper">
-		<img src="/assets/equalizer.gif" alt="">
+		<img src="/assets/equalizer.gif" alt="" height="30">
       <a href="#" class="brand-logo center">Rhythm Runnr</a>
     </div>
   </nav>
 <div class="container">
 	<div class="row">
-		<div class="col m12">
+		<div class="col m8">
 			<div class="card">
 				<!--if the file has been uploaded show it's name, if not, aske for file-->
 				{{#if file}}
-				<div class="card-content">
+				<div class="card-content center">
 					<span class="card-title"><h4>{{file.originalname}}</h4></span>
 				</div>
-				<div class="card-action">
-					<input type="button" id="start" value="Analyze Song"/>
+				<div class="card-action" id="game">
+					<input   class="btn" type="button" id="start" value="Analyze Song"/>
 					<div id="phaser-game"></div>
 				</div>
 				{{else}}
-				<div class="card-content">
+				<div class="card-content center">
 					<span class="card-title"> Welcome to Rythm Runnr, and endless runner based on YOUR songs!</span>
 					<p>Upload a song to get started</p>
 					<form id='uploadForm' action='/upload' method='post'enctype="multipart/form-data">
@@ -31,6 +31,23 @@
 				
 				{{/if}}
 				</div>
+			</div>
+			<div class="col m4">
+				<table>
+					<thead>
+					<tr>
+						<th>Initials</th>
+						<th>score</th>
+					</tr>
+					</thead>
+					<tbody>
+					{{#each highScores}}
+					<tr>
+						<td>{{this.Initials}}</td>
+						<td>{{this.score}}</td>
+					</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>

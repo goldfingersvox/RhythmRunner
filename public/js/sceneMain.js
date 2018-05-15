@@ -5,6 +5,7 @@ let score=0;
 let health=100;
 
 $(document).on("click","#gameStart", function(){
+    $("#gameStart").hide()
     console.log(result)
     //global background object
 let background={};
@@ -473,7 +474,24 @@ var config = {
 
 
 
+function highScore(endScore){
+    $("body").append("<div class='row'><div class='col m8'><div class='card'><div class='card-content'><span class='card-title'> Add your high score!</span><div class='input-field'> <input id='initials' type='text' class='validate'><label for='initials'>Initials</label><h6>Score:"+endScore+"</h6><input type='submit' class='btn' id='#submitScore'></div></div></div></div>")
 
+}
+
+let initials=$("#initials").val().trim();
+    
+let data= {name:initials,score:score};
+
+$(document).on("click", "#submitScore", function(){
+    
+    $.ajax("/score", {
+        type: "POST",
+        data:data
+        }).then(function(){
+            $("#game").append("<p>Score Sent!</p>")
+        })
+})
 
     
 

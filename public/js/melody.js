@@ -70,8 +70,9 @@ $(document).ready(function(err){
                     noteAvg/=noteArr.length;
                     highMid=(noteAvg+noteHigh)/2
                     lowMid=(noteAvg+noteLow)/2
+                    $("#analyzing").hide();
+                    $("#game").append("<button id='gameStart' class='btn'> start game</button>")
 
-                    $("body").append("<button id='gameStart'>start game</button>")
 
                 }});
             }
@@ -86,6 +87,8 @@ $(document).ready(function(err){
             // start task when clicking on the "Start task" button
             $(document).ready(function() {
                 $(document).on("click","#start", function() {
+                    $("#start").hide();
+                    $("#game").append("<p class='analyzing'> Analyzing...</p>")
                     console.log(songLink)
                     // execute an HTTP GET using the task's URL, the parameters and callback functions defined above
                     $.ajax({ url: 'https://api.sonicAPI.com/' + taskUrl, data: parameters, 
