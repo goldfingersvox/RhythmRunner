@@ -483,6 +483,8 @@ function highScore(endScore){
 //sending score to database
 $(document).on("click", "#submitScore", function(){
 
+    console.log("sending")
+
     $("#scoreCard").slideUp();
 
     let initials=$("#initials").val().trim();
