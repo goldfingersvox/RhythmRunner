@@ -1,17 +1,49 @@
 
-	<div class="entry">
-  {{#if file}}
-    <h1>{{file.originalname}}</h1>
-	<input type="button" id="start" value="Start task" />
-	<div id="result" />
-  {{else}}
+<div class="entry">
+<nav>
+    <div class="nav-wrapper">
+		<img src="/assets/equalizer.gif" alt="">
+      <a href="#" class="brand-logo center">Rhythm Runnr</a>
+    </div>
+  </nav>
+<div class="container">
+	<div class="row">
+		<div class="col m12">
+			<div class="card">
+				<!--if the file has been uploaded show it's name, if not, aske for file-->
+				{{#if file}}
+				<div class="card-content">
+					<span class="card-title"><h4>{{file.originalname}}</h4></span>
+				</div>
+				<div class="card-action">
+					<input type="button" id="start" value="Analyze Song"/>
+					<div id="phaser-game"></div>
+				</div>
+				{{else}}
+				<div class="card-content">
+					<span class="card-title"> Welcome to Rythm Runnr, and endless runner based on YOUR songs!</span>
+					<form id='uploadForm' action='/upload' method='post'enctype="multipart/form-data">
+						<div class="file-field input-field">
+							<div class="btn">
+								<span>File</span>
+							<input type="file" name="song">
+							</div>
+							<div class="file-path-wrapper">
+								<input class="file-path validate" type="text">
+								<input class="btn" type='submit' value='Upload!' />
+							</div>
+							</div>
+				</form>
+					<input type='submit' value='Upload!' />
+				</div>
+				
+				{{/if}}
+				</div>
+			</div>
+		</div>
 	</div>
-
-    <form id='uploadForm' action='/upload' method='post'enctype="multipart/form-data">
-        <input type="file" name="song" />
-        <input type='submit' value='Upload!' />
-    </form>  
-	{{/if}}
+</div>
+  
 	
 
 

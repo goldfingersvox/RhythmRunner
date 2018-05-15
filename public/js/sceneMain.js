@@ -36,8 +36,11 @@ let music;
 let scoreText;
 
 let healthText;
+
+let j;
+let z;
 //the boot scene
-let boot ={
+/*let boot ={
     key: 'myGameScene',
     active: true,
     preload:function(){
@@ -75,7 +78,7 @@ let boot ={
     }
     
         
-}
+}*/
 //the main game scene
 let gameScene = {
 
@@ -175,7 +178,7 @@ let gameScene = {
         })
     
 
-        let j;
+
         
         //this loop creates the enemies from the song information sent back from the API
         for (j=0;j<noteArr.length;j++){
@@ -213,7 +216,7 @@ let gameScene = {
 
         }
 
-        for(let z=0; z<beatArr.length; z+=2){
+        for(z=0; z<beatArr.length; z+=2){
             if(beatArr[z].downbeat){
                 timedEvent = this.time.addEvent({
                     delay: (beatArr[z].time)*1000,
@@ -286,9 +289,17 @@ let gameScene = {
         background.tilePositionX += 8;
         //ground.tilePositionXX+=8
 
+        //game over if health is gone
         if(health===0){
             this.scene.start('myGameOverScene')
             music.stop();
+            highScore();
+        }
+
+
+        if((j+1)==noteArr.length&&(z+1)==beatArr.length){
+            let goodjobtext = this.add.text(500, 250, 'Song Over, Good Job!', { fontSize: '32px', fill: '#ffffff' });
+            highScore();
         }
     },
 
@@ -445,13 +456,14 @@ var config = {
     type: Phaser.AUTO,
     width: 1100,
     height: 500,
+    parent: 'phaser-game',
     physics: {
         default: 'arcade',
         arcade: {
             debug: false
         }
     },
-    scene: [boot, gameScene, gameOver]
+    scene: [ gameScene, gameOver]
     };
 
     var game = new Phaser.Game(config);   
@@ -460,7 +472,7 @@ var config = {
 
 
 
-    
+
 
 
     
