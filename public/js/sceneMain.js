@@ -244,12 +244,22 @@ let gameScene = {
         this.physics.add.collider(downs, grounds);
         this.physics.add.collider(roxy, grounds);
 
-
-        //these overlaps help determine if the player hits the enemies on time
-        this.physics.add.overlap(roxy, ups, gameScene.hitUp, null, this);
-        this.physics.add.overlap(roxy, downs, gameScene.hitDown, null, this);
-        this.physics.add.overlap(roxy, lefts, gameScene.hitLeft, null, this);
-        this.physics.add.overlap(roxy, rights, gameScene.hitRight, null, this);
+        //this conditional tests if there's a gamepad
+        /*if(this.gamepad.total>0){
+            //if there is, run these functions
+            this.physics.add.overlap(roxy, ups, gameScene.gamepadHitUp, null, this);
+            this.physics.add.overlap(roxy, downs, gameScene.gamepadHitDown, null, this);
+            this.physics.add.overlap(roxy, lefts, gameScene.gamepadHitLeft, null, this);
+            this.physics.add.overlap(roxy, rights, gameScene.gamepadHitRight, null, this);
+        }
+        else{*/
+            //these overlaps help determine if the player hits the enemies on time
+            this.physics.add.overlap(roxy, ups, gameScene.hitUp, null, this);
+            this.physics.add.overlap(roxy, downs, gameScene.hitDown, null, this);
+            this.physics.add.overlap(roxy, lefts, gameScene.hitLeft, null, this);
+            this.physics.add.overlap(roxy, rights, gameScene.hitRight, null, this);
+        //}
+        
 
         //these overlaps help determine if the player loses health since the enemies got past them
         this.physics.add.overlap(checker, rights, gameScene.loseHealthRight, null, this);
@@ -340,9 +350,11 @@ let gameScene = {
     hitLeft:function(roxy, left)
     {
         this.input.keyboard.on('keydown_LEFT', () => {
-            score+=100
             left.disableBody(true,true)
-            scoreText.setText('Score: ' + score);
+            if(!left){
+                score+=100
+                scoreText.setText('Score: ' + score);
+            }
         });
 
     },
@@ -350,9 +362,11 @@ let gameScene = {
     hitRight:function (roxy, right)
     {
         this.input.keyboard.on('keydown_RIGHT', () => {
-            score+=100
             right.disableBody(true,true)
-            scoreText.setText('Score: ' + score);
+            if(!right){
+                score+=100
+                scoreText.setText('Score: ' + score);
+            }
         });
     
     },
@@ -360,21 +374,70 @@ let gameScene = {
     hitUp:function (roxy, up)
     {
         this.input.keyboard.on('keydown_UP', () => {
-            score+=100
             up.disableBody(true,true)
-            scoreText.setText('Score: ' + score);
+            if(!up){
+                score+=100
+                scoreText.setText('Score: ' + score);
+            }
         });
     
     },
 
     hitDown:function (roxy, down)
     {
-        this.input.keyboard.on('keydown_DOWN', () => {
-            score+=100
+        this.input.gamepad.on('keydown_DOWN', () => {
             down.disableBody(true,true)
-            scoreText.setText('Score: ' + score);
+            if(!down){
+                score+=100
+                scoreText.setText('Score: ' + score);
+            }       
+         });
+    }, /*gamepadHitLeft:function(roxy, left)
+    {
+        this.input.gamepad.on('keydown_LEFT', () => {
+            left.disableBody(true,true)
+            if(!left){
+                score+=100
+                scoreText.setText('Score: ' + score);
+            }
         });
+
     },
+
+    gamepadHitRight:function (roxy, right)
+    {
+        this.input.gamepad.on('keydown_RIGHT', () => {
+            right.disableBody(true,true)
+            if(!right){
+                score+=100
+                scoreText.setText('Score: ' + score);
+            }
+        });
+    
+    },
+
+    gamepadHitUp:function (roxy, up)
+    {
+        this.input.gamepad.on('keydown_UP', () => {
+            up.disableBody(true,true)
+            if(!up){
+                score+=100
+                scoreText.setText('Score: ' + score);
+            }
+        });
+    
+    },
+
+    gamepadHitDown:function (roxy, down)
+    {
+        this.input.keyboard.on('keydown_DOWN', () => {
+            down.disableBody(true,true)
+            if(!down){
+                score+=100
+                scoreText.setText('Score: ' + score);
+            }       
+         });
+    },*/
     //this function is called if player misses an enemy
     loseHealthDown:function (checker,down)
     {
