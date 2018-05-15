@@ -275,7 +275,7 @@ let gameScene = {
         //ground.tilePositionXX+=8
 
         if(health===0){
-            gameOver();
+            gameScene.gameOver();
         }
     },
 
@@ -436,7 +436,7 @@ var config = {
             debug: false
         }
     },
-    scene: [boot, gameScene]
+    scene: [boot, gameScene, gameOver]
     };
 
     var game = new Phaser.Game(config);   
