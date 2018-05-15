@@ -31,16 +31,20 @@ let rights;
 let cursors;
 
 let music;
+
+let scoreText;
+
+let healthText;
 //the boot scene
 let boot ={
-    preload(){
+    preload:function(){
         
         this.load.spritesheet('equ', '/assets/sprites/ezgif.com-gif-maker.png')
         this.load.image('rr', '/assets/sprites/rr.png')
         this.load.image('button', '/assets/sprites/start.png')
     },
 
-    create(){
+    create:function(){
 
         this.anims.create({
             key: 'loop',
@@ -49,13 +53,13 @@ let boot ={
             repeat: -1
         });
 
-        let equ=this.physics.add.sprite(200,550);
+        let equ=this.physics.add.sprite(550, 200);
 
         equ.anims.play('loop');
 
-        let text= this.physics.add.static(250,550);
+        let text= this.physics.add.static(550, 250);
 
-        let button= this.physics.add.sprite(400,550);
+        let button= this.physics.add.sprite(550,400);
     }
         
 }
@@ -104,6 +108,13 @@ let gameScene = {
         //giving her some physics(bounce and making sure she doesn't go off screen)
         roxy.setBounce(0.2);
         roxy.setCollideWorldBounds(true);
+
+        //loading in the text for the score
+        scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+
+        //loading in the text for the health
+        healthText = this.add.text(16, 26, 'health: 100', { fontSize: '32px', fill: '#000' });
+
 
 
         //getting main player's running animation frames
@@ -293,6 +304,7 @@ let gameScene = {
         if(cursors.left.isDown){
             score+=100
             left.disableBody(true,true)
+            scoreText.setText('Score: ' + score);
         }
         else{
             roxy.anims.play('run', true);
@@ -302,9 +314,9 @@ let gameScene = {
     hitRight:function (roxy, right)
     {
         if(cursors.right.isDown){
-            roxy.anims.play('slash', true);
             score+=100
             right.disableBody(true,true)
+            scoreText.setText('Score: ' + score);
 
         }
         else{
@@ -317,9 +329,9 @@ let gameScene = {
     hitUp:function (roxy, up)
     {
         if(cursors.up.isDown){
-            roxy.anims.play('slash', true);
             score+=100
             up.disableBody(true,true)
+            scoreText.setText('Score: ' + score);
 
         }
         else{
@@ -330,9 +342,10 @@ let gameScene = {
     hitDown:function (roxy, down)
     {
         if(cursors.down.isDown){
-            roxy.anims.play('slash', true);
             score+=100
             down.disableBody(true,true)
+            scoreText.setText('Score: ' + score);
+
 
         }
         else{
@@ -343,6 +356,7 @@ let gameScene = {
     hit:function ()
     {
         health=-10
+        healthText.setText('Health: ' + health);
     },
     limitUp: function(down, up){
         down.disableBody(true,true)
@@ -360,6 +374,8 @@ let gameScene = {
     }
 
 }
+
+let
 
 var config = {
 
