@@ -1,15 +1,4 @@
-/*var config = {
-    apiKey: "AIzaSyDSRp9WUh4ZJ6vjPdAjgjmrCCpcMj7KQRc",
-    authDomain: "rythemrunnr.firebaseapp.com",
-    databaseURL: "https://rythemrunnr.firebaseio.com",
-    projectId: "rythemrunnr",
-    storageBucket: "rythemrunnr.appspot.com",
-    messagingSenderId: "575687161188"
-  };
-  firebase.initializeApp(config);
-//get melody starts here
-let storage = firebase.app().storage
-let storageRef = firebase.storage().ref();*/
+
 let result;
 let noteArr;
 let noteAvg=0;
@@ -22,7 +11,7 @@ let notePitchArr=[]
 let song;
 let bpmArr;
 let songPath
-
+//getting songPath from the backend first
     $(document).ready(function(err){
         $.ajax("/upload", {
             type: "GET",
@@ -106,32 +95,6 @@ $(document).ready(function() {
         
     
         }); 
-/*//uploading the user's song to firebase
-    let fileButton =$("#song")
-    $(fileButton).on("change", function(e){
-        let file= e.target.files[0]
-
-        let storageRef=firebase.storage().ref("songs/"+file.name+);
-
-        storageRef.put(file).then(function(snapshot){
-            console.log('Uploaded a blob or file!');
-            console.log(snapshot)
-            //then fetching the url to the song
-
-            storageRef.getDownloadURL().then(function(url){
-                song=url
-
-            })
-
-        })
-
-
-    })*/
-
-    
-
-
-
 
  
 
