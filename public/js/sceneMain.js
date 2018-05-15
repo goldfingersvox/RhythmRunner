@@ -375,7 +375,9 @@ let gameScene = {
 
 }
 
-let
+let gameOver= {
+    
+}
 
 var config = {
 
