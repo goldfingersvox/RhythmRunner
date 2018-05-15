@@ -496,7 +496,7 @@ $(document).on("click", "#submitScore", function(){
         url: "/scores",
         data: data
         }).then(function(){
-            $("#game").append("<h6>Score Sent!</h6>")
+            $("#game").append("<h6>Score Uploaded!</h6>")
         })
 })
 

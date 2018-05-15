@@ -66,6 +66,8 @@ router.post("/scores", function(req,res){
         initials:req.body.name,
         score:req.body.score
     })
+    res.send("done!")
+
 })
 
 
