@@ -70,6 +70,9 @@ let boot ={
 //the main game scene
 let gameScene = {
 
+    key: 'myGameScene',
+    active: true,
+
         preload() {
 
         ///loading the background 
@@ -400,7 +403,7 @@ let gameScene = {
         music.play();
     },
     gameOver: function(){
-        this.scene.start('gameOver')
+        this.scene.start('myGameOverScene')
     }
 
 }
@@ -408,13 +411,16 @@ let gameScene = {
 let gameovertext;
 let gameOver= {
     
+    key: 'myGameOverScene',
+    active: false,
+
     preload:function(){
 
     },
 
     create:function(){
 
-    gameovertext = this.add.text(550, 250, 'Game Over', { fontSize: '32px', fill: '#ffffff' });
+    gameovertext = this.add.text(500, 250, 'Game Over', { fontSize: '32px', fill: '#ffffff' });
 
 
     },
