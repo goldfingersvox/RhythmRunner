@@ -33,7 +33,26 @@ let cursors;
 let music;
 //the boot scene
 let boot ={
+    preload(){
+        
+        this.load.spritesheet('equ', '/assets/sprites/ezgif.com-gif-maker.png')
+        this.load.image('rr', '/assets/sprites/rr.png')
+    },
 
+    create(){
+
+        this.anims.create({
+            key: 'loop',
+            frames: this.anims.generateFrameNumbers('equ', { start: 0, end: 9 }),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        let equ=this.physics.add.sprite(200,550);
+
+        equ.anims.play('loop');
+    }
+        
 }
 //the main game scene
 let gameScene = {
@@ -54,10 +73,10 @@ let gameScene = {
         this.load.image('down', '/assets/d-pad down.png')
         this.load.image('right', '/assets/d-pad right.png')
         //load the song (hardcoaded for now)
-        this.load.audio('song', '../'+songPath)
+        //this.load.audio('song', '../'+songPath)
 
     },
-
+            
      create:function() {
 
 
@@ -199,8 +218,8 @@ let gameScene = {
 
         //this overlap makes sure you don't get two enemies at once
         this.physics.add.overlap(downs, ups, gameScene.limitUp, null, this);
-        this.physics.add.overlap(lefts, ups, gameScene.limitLeft, null, this);
-        this.physics.add.overlap(rights, ups, gameScene.limitRight, null, this);
+        this.physics.add.overlap(lefts, downs, gameScene.limitLeft, null, this);
+        this.physics.add.overlap(rights, downs, gameScene.limitRight, null, this);
 
 
 
