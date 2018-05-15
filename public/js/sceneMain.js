@@ -38,6 +38,8 @@ let scoreText;
 let healthText;
 //the boot scene
 let boot ={
+    key: 'myGameScene',
+    active: true,
     preload:function(){
         
         this.load.spritesheet('equ', '/assets/sprites/ezgif.com-gif-maker.png')
@@ -47,6 +49,8 @@ let boot ={
 
     create:function(){
 
+        let equ=this.physics.add.sprite(550, 200, 'equ');
+
         this.anims.create({
             key: 'loop',
             frames: this.anims.generateFrameNumbers('equ', { start: 0, end: 9 }),
@@ -54,24 +58,29 @@ let boot ={
             repeat: -1
         });
 
-        let equ=this.physics.add.sprite(550, 200);
-
         equ.anims.play('loop');
 
-        let text= this.physics.add.static(550, 250);
+        let text= this.physics.add.static(550, 250, 'rr');
 
-        let button= this.physics.add.sprite(550,400);
+        let button= this.physics.add.sprite(550,400, 'button');
     },
     update:function(){
 
+        sprite.on('pointerup', function (pointer) {
+
+            this.scene.start('myGameScene')
+    
+        });
+
     }
+    
         
 }
 //the main game scene
 let gameScene = {
 
     key: 'myGameScene',
-    active: true,
+    active: false,
 
         preload() {
 
@@ -279,6 +288,7 @@ let gameScene = {
 
         if(health===0){
             this.scene.start('myGameOverScene')
+            music.stop();
         }
     },
 
