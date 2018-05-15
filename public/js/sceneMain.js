@@ -61,6 +61,9 @@ let boot ={
         let text= this.physics.add.static(550, 250);
 
         let button= this.physics.add.sprite(550,400);
+    },
+    update:function(){
+        
     }
         
 }
@@ -356,7 +359,7 @@ let gameScene = {
     //this function is called if player misses an enemy
     hit:function ()
     {
-        health=-10
+        health-=10
         healthText.setText('Health: ' + health);
     },
     limitUp: function(down, up){
