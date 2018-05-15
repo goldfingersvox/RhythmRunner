@@ -41,7 +41,7 @@ let healthText;
 let j;
 let z;
 //the boot scene
-/*let boot ={
+let boot ={
     key: 'myGameScene',
     active: true,
     preload:function(){
@@ -70,16 +70,16 @@ let z;
     },
     update:function(){
 
-        sprite.on('pointerup', function (pointer) {
+        button.on('pointerup', function (pointer) {
 
-            this.scene.start('myGameScene')
+            this.scene.start('myBootScene')
     
         });
 
     }
     
         
-}*/
+}
 //the main game scene
 let gameScene = {
 
@@ -441,7 +441,7 @@ let gameOver= {
 
     create:function(){
 
-    gameovertext = this.add.text(400, 250, 'Game Over', { fontSize: '32px', fill: '#ffffff' });
+    gameovertext = this.add.text(450, 250, 'Game Over', { fontSize: '32px', fill: '#ffffff' });
 
 
     },
@@ -464,7 +464,7 @@ var config = {
             debug: false
         }
     },
-    scene: [ gameScene, gameOver]
+    scene: [ boot, gameScene, gameOver]
     };
 
     var game = new Phaser.Game(config);   
