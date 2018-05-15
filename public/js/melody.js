@@ -21,34 +21,16 @@ let avgVol=0;
 let notePitchArr=[]
 let song;
 let bpmArr;
-window.onload = function() {
-/*//uploading the user's song to firebase
-    let fileButton =$("#song")
-    $(fileButton).on("change", function(e){
-        let file= e.target.files[0]
+let songPath
 
-        let storageRef=firebase.storage().ref("songs/"+file.name+);
-
-        storageRef.put(file).then(function(snapshot){
-            console.log('Uploaded a blob or file!');
-            console.log(snapshot)
-            //then fetching the url to the song
-
-            storageRef.getDownloadURL().then(function(url){
-                song=url
-
-            })
-
-        })
-
-
-    })*/
-
-
-
-
-
-var accessId = 'ca88977b-8027-4906-b6c6-8c2a10948caf';
+    $(document).ready(function(err){
+        $.ajax("/upload", {
+            type: "GET",
+          }).then(
+            function(results){
+              console.log(results);
+              songPath=results
+              var accessId = 'ca88977b-8027-4906-b6c6-8c2a10948caf';
 var taskUrl = 'analyze/melody';
 var parameters = { blocking: false, format: 'json', access_id: accessId };
 
@@ -120,5 +102,36 @@ $(document).ready(function() {
                  success: onTaskStarted, error: onTaskFailed, crossDomain: true });
     });
 });
+            })
+        
+    
+        }); 
+/*//uploading the user's song to firebase
+    let fileButton =$("#song")
+    $(fileButton).on("change", function(e){
+        let file= e.target.files[0]
+
+        let storageRef=firebase.storage().ref("songs/"+file.name+);
+
+        storageRef.put(file).then(function(snapshot){
+            console.log('Uploaded a blob or file!');
+            console.log(snapshot)
+            //then fetching the url to the song
+
+            storageRef.getDownloadURL().then(function(url){
+                song=url
+
+            })
+
+        })
+
+
+    })*/
+
+    
+
+
+
+
  
-};
+
