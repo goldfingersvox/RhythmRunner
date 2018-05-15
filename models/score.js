@@ -10,7 +10,8 @@ module.exports = function(sequelize, DataTypes){
     score: {
       type: DataTypes.INTEGER,
         allowNull: false,
-    }
+    },
+    timestamps: false,
   })
   return Score;
 }
