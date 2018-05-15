@@ -23,7 +23,7 @@ var upload = multer({storage : storage} )
 let songPath;
 //route to homepage
 router.get('/', function (req, res){
-    db.Scores.findAll({order: [['score','DESC']]}).then(function(dbScore) {
+    db.Score.findAll({order: ['score','DESC']}).then(function(dbScore) {
         res.render("index", {scores:dbScore});
       });
     
@@ -34,7 +34,7 @@ router.post('/upload', upload.single('song'), function (req, res, next) {
     if(req.file){
     console.log(req.file);
     songPath=req.file.path;
-    db.Scores.findAll({order: [['score' , 'DESC']]}).then(function(dbScore) {
+    db.Score.findAll({order: ['score' , 'DESC']}).then(function(dbScore) {
         res.render("index", {file:req.file,scores:dbScore});
     });
 
