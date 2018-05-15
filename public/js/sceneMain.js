@@ -473,15 +473,18 @@ var config = {
 
 
 
-
+//appending form to add your high score
 function highScore(endScore){
-    $("body").append("<div class='row'><div class='col m8'><div class='card'><div class='card-content'><span class='card-title'> Add your high score!</span><div class='input-field'> <input id='initials' type='text' class='validate'><label for='initials'>Initials</label><h6>Score:"+endScore+"</h6><input type='submit' class='btn' id='#submitScore'></div></div></div></div>")
+    $("body").append("<div class='row'><div class='col m8'><div id='scoreCard'class='card'><div class='card-content'><span class='card-title'> Add your high score!</span><div class='input-field'> <input id='initials' type='text' class='validate'><label for='initials'>Initials</label><h6>Score:"+endScore+"</h6><input type='submit' class='btn grey darken-4' id='#submitScore'></div></div></div></div>")
 
 }
 
 
-
+//sending score to database
 $(document).on("click", "#submitScore", function(){
+
+    $("#scoreCard").slideUp();
+
     let initials=$("#initials").val().trim();
     
     let data= {name:initials,score:score};
@@ -490,7 +493,7 @@ $(document).on("click", "#submitScore", function(){
         type: "POST",
         data:data
         }).then(function(){
-            $("#game").append("<p>Score Sent!</p>")
+            $("#game").append("<h6>Score Sent!</h6>")
         })
 })
 

@@ -1,21 +1,20 @@
 
 <div class="entry">
 <nav>
-    <div class="nav-wrapper">
-		<img src="/assets/equalizer.gif" alt="" height="30">
-      <a href="#" class="brand-logo center">Rhythm Runnr</a>
+    <div class="nav-wrapper black">
+      <a href="#" class="brand-logo center"><img src="/assets/equalizer.gif" alt="" height="60">RHYTHM RUNNR</a>
     </div>
   </nav>
 	<div class="row">
 		<div class="col m8">
-			<div class="card">
+			<div class="card section">
 				<!--if the file has been uploaded show it's name, if not, aske for file-->
 				{{#if file}}
 				<div class="card-content center">
 					<span class="card-title"><h4>{{file.originalname}}</h4></span>
 				</div>
 				<div class="card-action" id="game">
-					<input   class="btn" type="button" id="start" value="Analyze Song"/>
+					<input   class="btn grey darken-4" type="button" id="start" value="Analyze Song"/>
 					<div id="phaser-game"></div>
 				</div>
 				{{else}}
@@ -24,7 +23,7 @@
 					<p>Upload a song to get started</p>
 					<form id='uploadForm' action='/upload' method='post'enctype="multipart/form-data">
 					<input class="file-path validate" type="file" name="song" />
-					<input class="btn" type='submit' value='Upload!' />
+					<input class="btn grey darken-4" type='submit' value='Upload!' />
 				</form>  
 				</div>
 				
@@ -32,6 +31,7 @@
 				</div>
 			</div>
 			<div class="col m4">
+				<h4>High Scores!</h4>
 				<table>
 					<thead>
 					<tr>
