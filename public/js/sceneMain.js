@@ -451,7 +451,7 @@ var config = {
             debug: false
         }
     },
-    scene: [ gameScene, gameOver]
+    scene: [boot, gameScene, gameOver]
     };
 
     var game = new Phaser.Game(config);   
