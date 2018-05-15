@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes){
-  var Score = sequelize.define("User", {
+  var Score = sequelize.define("Score", {
     initieals: {
       type: DataTypes.STRING,
         allowNull: false,
@@ -12,6 +12,7 @@ module.exports = function(sequelize, DataTypes){
         allowNull: false,
     }
   })
+  return Score;
 }
 
 
