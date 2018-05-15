@@ -37,6 +37,7 @@ let boot ={
         
         this.load.spritesheet('equ', '/assets/sprites/ezgif.com-gif-maker.png')
         this.load.image('rr', '/assets/sprites/rr.png')
+        this.load.image('button', '/assets/sprites/start.png')
     },
 
     create(){
@@ -51,6 +52,10 @@ let boot ={
         let equ=this.physics.add.sprite(200,550);
 
         equ.anims.play('loop');
+
+        let text= this.physics.add.static(250,550);
+
+        let button= this.physics.add.sprite(400,550);
     }
         
 }
@@ -72,8 +77,8 @@ let gameScene = {
         this.load.image('left', '/assets/d-pad left.png')
         this.load.image('down', '/assets/d-pad down.png')
         this.load.image('right', '/assets/d-pad right.png')
-        //load the song (hardcoaded for now)
-        //this.load.audio('song', '../'+songPath)
+        //load the song 
+        this.load.audio('song', '../'+songPath)
 
     },
             
@@ -367,7 +372,7 @@ var config = {
             debug: false
         }
     },
-    scene: [gameScene]
+    scene: [boot, gameScene]
     };
 
     var game = new Phaser.Game(config);   
