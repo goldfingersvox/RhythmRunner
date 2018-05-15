@@ -7,6 +7,7 @@ let noteLow=0;
 let highMid=0;
 let lowMid=0;
 let avgVol=0;
+let volLowMid=0;
 let notePitchArr=[]
 let song;
 let bpmArr;
@@ -56,18 +57,22 @@ $(document).ready(function(err){
                     //doing some math to figure out the range for the game- finding the average note pitch and the highest and lowest pitches, as well as mid points between highest and average and lowest and average. This will result in five numbers-lowest pitch, low midpoint, average, high midpoint, highest pitch, also finding the average volume of notes in the track.
                     result=data
                     noteArr=data.melody_result.notes
+                    let volArr=[];
                     console.log('success melody')
                     
                     for (let i = 0; i<noteArr.length;i++){
                         noteAvg+=noteArr[i].midi_pitch;
                         notePitchArr.push(noteArr[i].midi_pitch)
                         avgVol+=noteArr[i].volume;
+                        volArr.push(noteArr[i].volume)
                         
                     }
                     noteHigh=Math.max.apply(null, notePitchArr)
                     noteLow=Math.min.apply(null, notePitchArr)
+                    volLow=Math.min.apply(null,volArr)
                     avgVol/=noteArr.length;
                     noteAvg/=noteArr.length;
+                    volLowMid=(avgVol+volLow)/2
                     highMid=(noteAvg+noteHigh)/2
                     lowMid=(noteAvg+noteLow)/2
                     $("#analyzing").hide();

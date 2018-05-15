@@ -184,7 +184,7 @@ let gameScene = {
         //this loop creates the enemies from the song information sent back from the API
         for (j=0;j<noteArr.length;j++){
         //this conditional makes sure only above average volume notes are added
-        if(noteArr[j].volume>avgVol){
+        if(noteArr[j].volume>volLowMid){
             if (noteArr[j].midi_pitch>noteAvg)
             timedEvent = this.time.addEvent({
                 delay: (noteArr[j].onset_time)*1000,
@@ -216,17 +216,22 @@ let gameScene = {
 
 
         }
+        if (beatArr){
 
-        for(z=0; z<beatArr.length; z+=3){
-            if(beatArr[z].downbeat){
-                timedEvent = this.time.addEvent({
-                    delay: (beatArr[z].time)*1000,
-                    callback: gameScene.createDowns,
-                    callbackScope: this,
-                    loop: false
-            })
+            for(z=0; z<beatArr.length; z+=3){
+                if(beatArr[z].downbeat){
+                    timedEvent = this.time.addEvent({
+                        delay: (beatArr[z].time)*1000,
+                        callback: gameScene.createDowns,
+                        callbackScope: this,
+                        loop: false
+                })
+            }
+            }
+
         }
-        }
+
+        
         //associating cursors variable with the keyboard cursors
         cursors = this.input.keyboard.createCursorKeys();
 
@@ -263,16 +268,16 @@ let gameScene = {
 
     update:function() {
         //playing the slash animations
-        if(cursors.left.isDown){
+        if(cursors.left.justDown){
             roxy.anims.play('slash', true);
         }
-        else if (cursors.right.isDown){
+        else if (cursors.right.justDown){
             roxy.anims.play('slash', true);
         }
-        else if (cursors.up.isDown){
+        else if (cursors.up.justDown){
             roxy.anims.play('slash', true);
         }
-        else if (cursors.down.isDown){
+        else if (cursors.down.justDown){
             roxy.anims.play('slash', true);
         }
         else{
@@ -334,7 +339,7 @@ let gameScene = {
     //all of these functions control what happenes if the player presses on a button to kill an enemy
     hitLeft:function(roxy, left)
     {
-        if(cursors.left.isDown){
+        if(cursors.left.justDown){
             score+=100
             left.disableBody(true,true)
             scoreText.setText('Score: ' + score);
@@ -346,7 +351,7 @@ let gameScene = {
 
     hitRight:function (roxy, right)
     {
-        if(cursors.right.isDown){
+        if(cursors.right.justDown){
             score+=100
             right.disableBody(true,true)
             scoreText.setText('Score: ' + score);
@@ -361,7 +366,7 @@ let gameScene = {
 
     hitUp:function (roxy, up)
     {
-        if(cursors.up.isDown){
+        if(cursors.up.justDown){
             score+=100
             up.disableBody(true,true)
             scoreText.setText('Score: ' + score);
@@ -374,7 +379,7 @@ let gameScene = {
 
     hitDown:function (roxy, down)
     {
-        if(cursors.down.isDown){
+        if(cursors.down.justDown){
             score+=100
             down.disableBody(true,true)
             scoreText.setText('Score: ' + score);
