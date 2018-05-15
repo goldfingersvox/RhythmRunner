@@ -52,10 +52,10 @@ var accessId = 'ca88977b-8027-4906-b6c6-8c2a10948caf';
 var taskUrl = 'analyze/melody';
 var parameters = { blocking: false, format: 'json', access_id: accessId };
 
-
+let songLink= 'https://protected-savannah-39174.herokuapp.com/'+songPath;
 //changing the API paramaters and adding in the song (hardcoded for now).
 parameters['detailed_result'] = 'false';
-parameters['input_file'] = 'https://protected-savannah-39174.herokuapp.com/'+songPath;
+parameters['input_file'] = songLink;
 
     
 function onTaskStarted(data) {
@@ -114,7 +114,7 @@ function onTaskFailed(response) {
 // start task when clicking on the "Start task" button
 $(document).ready(function() {
     $(document).on("click","#start", function() {
-        console.log(songPath)
+        console.log(songLink)
     	// execute an HTTP GET using the task's URL, the parameters and callback functions defined above
         $.ajax({ url: 'https://api.sonicAPI.com/' + taskUrl, data: parameters, 
                  success: onTaskStarted, error: onTaskFailed, crossDomain: true });
