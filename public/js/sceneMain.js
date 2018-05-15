@@ -337,36 +337,39 @@ let gameScene = {
         left.allowGravity = true;
     }, 
     //all of these functions control what happenes if the player presses on a button to kill an enemy
-
+    hitLeft:function(roxy, left)
+    {
         this.input.keyboard.on('keydown_LEFT', () => {
             score+=100
             left.disableBody(true,true)
             scoreText.setText('Score: ' + score);
         });
 
+    },
 
-
-
+    hitRight:function (roxy, right)
+    {
         this.input.keyboard.on('keydown_RIGHT', () => {
             score+=100
             right.disableBody(true,true)
             scoreText.setText('Score: ' + score);
         });
     
+    },
 
-
-
+    hitUp:function (roxy, up)
+    {
         this.input.keyboard.on('keydown_UP', () => {
             score+=100
             up.disableBody(true,true)
             scoreText.setText('Score: ' + score);
         });
     
-
+    },
 
     hitDown:function (roxy, down)
     {
-        gameScene.input.keyboard.on('keydown_DOWN', () => {
+        this.input.keyboard.on('keydown_DOWN', () => {
             score+=100
             down.disableBody(true,true)
             scoreText.setText('Score: ' + score);
