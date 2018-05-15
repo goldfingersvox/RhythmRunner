@@ -14,7 +14,7 @@
 					<span class="card-title"><h4>{{file.originalname}}</h4></span>
 				</div>
 				<div class="card-action" id="game">
-					<input   class="btn grey darken-4" type="button" id="start" value="Analyze Song"/>
+					<input   class="btn grey darken-4 center" type="button" id="start" value="Analyze Song"/>
 					<div id="phaser-game"></div>
 				</div>
 				{{else}}
@@ -31,23 +31,28 @@
 				</div>
 			</div>
 			<div class="col m4">
-				<h4>High Scores!</h4>
-				<table>
-					<thead>
-					<tr>
-						<th>Initials</th>
-						<th>score</th>
-					</tr>
-					</thead>
-					<tbody>
-					{{#each highScores}}
-					<tr>
-						<td>{{this.Initials}}</td>
-						<td>{{this.score}}</td>
-					</tr>
-					{{/each}}
-					</tbody>
-				</table>
+				<div class="card section">
+					<div class="card-content">
+					<span class="card-title"><h4>High Scores!</h4></span>
+					<table>
+						<thead>
+						<tr>
+							<th>Initials</th>
+							<th>score</th>
+						</tr>
+						</thead>
+						<tbody>
+						{{#each highScores}}
+						<tr>
+							<td>{{this.Initials}}</td>
+							<td>{{this.score}}</td>
+						</tr>
+						{{/each}}
+						</tbody>
+					</table>
+					</div>
+				</div>
+				
 			</div>
 		</div>
 </div>

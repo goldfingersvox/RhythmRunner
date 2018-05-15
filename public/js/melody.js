@@ -71,7 +71,7 @@ $(document).ready(function(err){
                     highMid=(noteAvg+noteHigh)/2
                     lowMid=(noteAvg+noteLow)/2
                     $("#analyzing").hide();
-                    $("#game").append("<button id='gameStart' class='btn grey darken-4'> start game</button>")
+                    $("#game").append("<button id='gameStart' class='btn grey darken-4 center'> start game</button>")
 
 
                 }});
