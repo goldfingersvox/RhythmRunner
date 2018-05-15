@@ -274,9 +274,9 @@ let gameScene = {
         background.tilePositionX += 8;
         //ground.tilePositionXX+=8
 
-        if(health===0){
-            //gameScene.gameOver();
-        }
+       // if(health===0){
+        //    gameScene.gameOver();
+       // }
     },
 
     //this function creates up baddies
@@ -399,9 +399,9 @@ let gameScene = {
         music=this.sound.add('song');
         music.play();
     },
-    gameOver: function(){
-        this.scene.get('gameOver')
-    }
+    //gameOver: function(){
+       // this.scene.get('gameOver')
+    //}
 
 }
 
