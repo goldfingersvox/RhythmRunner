@@ -4,6 +4,7 @@ var path=require("path")
 var router = express.Router();
 var fs=require("fs")
 var multer= require("multer")
+var db = require("../models");
 //instructing multer where and how to save files
 var storage = multer.diskStorage({
     destination: './uploads/',
@@ -22,7 +23,10 @@ var upload = multer({storage : storage} )
 let songPath;
 //route to homepage
 router.get('/', function (req, res){
-    res.render("index");
+    db.Post.findAll({}).then(function(dbPost) {
+        res.render("index", {scores:dbPost});
+      });
+    
 });
 
 //upload route- once file is uploaded, it sends back the name of the file
@@ -30,9 +34,9 @@ router.post('/upload', upload.single('song'), function (req, res, next) {
     if(req.file){
     console.log(req.file);
     songPath=req.file.path;
-
-    res.render("index", {file:req.file})
-
+    db.Post.findAll({}).then(function(dbPost) {
+        res.render("index", {file:req.file,scores:dbPost});
+    });
 
     }
     else if (req.uploadError){
@@ -56,5 +60,14 @@ router.get("/uploads/:fileName", function(req, res){
     res.download(file)
     
 })
+
+router.post("/scores", function(req,res){
+    db.User.create({
+        initials:req.body.name,
+        score:req.body.score
+    })
+})
+
+
 
 module.exports = router;

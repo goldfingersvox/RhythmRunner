@@ -1,10 +1,10 @@
 {
   "development": {
-    "port":"8889",
-    "username": "root",
-    "password": "root",
-    "database": "database_development",
-    "host": "127.0.0.1",
+    "port":"3306",
+    "username": "nz1a96e9lf77ka4c",
+    "password": "o5bpvv2kk3ugd2f4",
+    "database": "f4sshkyvmyiup399",
+    "host": "tuy8t6uuvh43khkk.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
     "dialect": "mysql"
   },
   "test": {

@@ -489,9 +489,10 @@ $(document).on("click", "#submitScore", function(){
     
     let data= {name:initials,score:score};
     
-    $.ajax("/score", {
-        type: "POST",
-        data:data
+    $.ajax({
+        method: "POST",
+        url: "/scores",
+        data: data
         }).then(function(){
             $("#game").append("<h6>Score Sent!</h6>")
         })
