@@ -11,6 +11,7 @@ let notePitchArr=[]
 let song;
 let bpmArr;
 let songPath
+let songLink
 //getting songPath from the backend first
     $(document).ready(function(err){
         $.ajax("/upload", {
@@ -23,7 +24,7 @@ let songPath
 var taskUrl = 'analyze/melody';
 var parameters = { blocking: false, format: 'json', access_id: accessId };
 
-let songLink= 'https://protected-savannah-39174.herokuapp.com/'+songPath;
+ songLink= 'https://protected-savannah-39174.herokuapp.com/'+songPath;
 //changing the API paramaters and adding in the song (hardcoded for now).
 parameters['detailed_result'] = 'false';
 parameters['input_file'] = songLink;
