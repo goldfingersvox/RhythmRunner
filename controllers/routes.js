@@ -4,7 +4,7 @@ var path=require("path")
 var router = express.Router();
 var fs=require("fs")
 var multer= require("multer")
-var db = require("../models");
+var db = require("../models/index");
 //instructing multer where and how to save files
 var storage = multer.diskStorage({
     destination: './uploads/',
