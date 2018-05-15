@@ -22,19 +22,11 @@
 				{{else}}
 				<div class="card-content">
 					<span class="card-title"> Welcome to Rythm Runnr, and endless runner based on YOUR songs!</span>
+					<p>Upload a song to get started</p>
 					<form id='uploadForm' action='/upload' method='post'enctype="multipart/form-data">
-						<div class="file-field input-field">
-							<div class="btn">
-								<span>File</span>
-							<input type="file" name="song">
-							</div>
-							<div class="file-path-wrapper">
-								<input class="file-path validate" type="text">
-								<input class="btn" type='submit' value='Upload!' />
-							</div>
-							</div>
-				</form>
-					<input type='submit' value='Upload!' />
+					<input class="btn" type="file" name="song" />
+					<input class="btn" type='submit' value='Upload!' />
+				</form>  
 				</div>
 				
 				{{/if}}
