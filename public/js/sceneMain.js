@@ -268,16 +268,16 @@ let gameScene = {
 
     update:function() {
         //playing the slash animations
-        if(cursors.left.justDown){
+        if(cursors.left.isDown){
             roxy.anims.play('slash', true);
         }
-        else if (cursors.right.justDown){
+        else if (cursors.right.isDown){
             roxy.anims.play('slash', true);
         }
-        else if (cursors.up.justDown){
+        else if (cursors.up.isDown){
             roxy.anims.play('slash', true);
         }
-        else if (cursors.down.justDown){
+        else if (cursors.down.isDown){
             roxy.anims.play('slash', true);
         }
         else{
@@ -339,56 +339,41 @@ let gameScene = {
     //all of these functions control what happenes if the player presses on a button to kill an enemy
     hitLeft:function(roxy, left)
     {
-        if(cursors.left.justDown){
+        gameScene.input.keyboard.on('keydown_LEFT', () => {
             score+=100
             left.disableBody(true,true)
             scoreText.setText('Score: ' + score);
-        }
-        else{
-            roxy.anims.play('run', true);
-        }
+        });
+
     },
 
     hitRight:function (roxy, right)
     {
-        if(cursors.right.justDown){
+        gameScene.input.keyboard.on('keydown_RIGHT', () => {
             score+=100
             right.disableBody(true,true)
             scoreText.setText('Score: ' + score);
-
-        }
-        else{
-            roxy.anims.play('run', true);
-        }
-
+        });
     
     },
 
     hitUp:function (roxy, up)
     {
-        if(cursors.up.justDown){
+        gameScene.input.keyboard.on('keydown_UP', () => {
             score+=100
             up.disableBody(true,true)
             scoreText.setText('Score: ' + score);
-
-        }
-        else{
-            roxy.anims.play('run', true);
-        }
+        });
+    
     },
 
     hitDown:function (roxy, down)
     {
-        if(cursors.down.justDown){
+        gameScene.input.keyboard.on('keydown_DOWN', () => {
             score+=100
             down.disableBody(true,true)
             scoreText.setText('Score: ' + score);
-
-
-        }
-        else{
-            roxy.anims.play('run', true);
-        }
+        });
     },
     //this function is called if player misses an enemy
     loseHealthDown:function (checker,down)
