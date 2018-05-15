@@ -63,7 +63,7 @@ let boot ={
         let button= this.physics.add.sprite(550,400);
     },
     update:function(){
-        
+
     }
         
 }
@@ -361,6 +361,12 @@ let gameScene = {
     {
         health-=10
         healthText.setText('Health: ' + health);
+        down.disableBody(true,true)
+        up.disableBody(true,true)
+        left.disableBody(true,true)
+        right.disableBody(true,true)
+
+
     },
     limitUp: function(down, up){
         down.disableBody(true,true)
