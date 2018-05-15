@@ -217,7 +217,7 @@ let gameScene = {
 
         }
 
-        for(z=0; z<beatArr.length; z+=2){
+        for(z=0; z<beatArr.length; z+=3){
             if(beatArr[z].downbeat){
                 timedEvent = this.time.addEvent({
                     delay: (beatArr[z].time)*1000,
