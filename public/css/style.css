@@ -1,3 +1,9 @@
+.group:after {
+  content: "";
+  display: table;
+  clear: both;
+  }
+
 body {
   background-color: #76197b;
 }
