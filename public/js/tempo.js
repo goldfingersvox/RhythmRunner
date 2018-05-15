@@ -6,7 +6,7 @@ var taskUrl = 'analyze/tempo';
 var parameters = { blocking: false, format: 'json', access_id: accessId };
 
 // the values for these parameters were taken from the corresponding controls in the demo form
-parameters['input_file'] = 'https://s1.vocaroo.com/media/download_temp/Vocaroo_s1Zf5DxjkHnz.mp3';
+parameters['input_file'] = 'https://protected-savannah-39174.herokuapp.com/'+songPath;
     
 function onTaskStarted(data) {
     var fileId = data.file.file_id;

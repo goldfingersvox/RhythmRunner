@@ -55,7 +55,7 @@ var parameters = { blocking: false, format: 'json', access_id: accessId };
 
 //changing the API paramaters and adding in the song (hardcoded for now).
 parameters['detailed_result'] = 'false';
-parameters['input_file'] = 'localhost:3000'+songPath;
+parameters['input_file'] = 'https://protected-savannah-39174.herokuapp.com/'+songPath;
 
     
 function onTaskStarted(data) {
