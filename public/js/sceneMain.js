@@ -400,7 +400,7 @@ let gameScene = {
         music.play();
     },
     gameOver: function(){
-       this.scene.get('gameOver')
+        this.scene.start('gameOver')
     }
 
 }
@@ -414,7 +414,7 @@ let gameOver= {
 
     create:function(){
 
-    gameovertext = this.add.text(550, 250, 'Game Over', { fontSize: '32px', fill: '#000' });
+    gameovertext = this.add.text(550, 250, 'Game Over', { fontSize: '32px', fill: '#ffffff' });
 
 
     },
