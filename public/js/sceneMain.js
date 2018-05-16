@@ -1,61 +1,6 @@
 
 //using gamepad framework to get gamepad to work
-var listener = new GamepadListener({
-    analog: false,
-    deadZone: 0.3
-});
 
-function init() {
-    var listener = new GamepadListener({}, false);
-    listener.on('gamepad:connected', function (e) {
-        console.log('connected', e);
-        var index = e.detail.gamepad.index,
-            id = e.detail.gamepad.id;
-       
-    });
-    listener.on('gamepad:disconnected', function (e) {
-        var index = e.detail.index;
-        outputLog(index, "Disconnected: " + names[index].innerHTML, e.detail);
-        console.log("gamepad disconnected")
-    });
-    
-
-    listener.on('gamepad:button', function (e) {
-        var index = e.detail.gamepad.index,
-            button = e.detail.index,
-            pressed = e.detail.pressed ? 'pressed' : 'released',
-            value = e.detail.value;
-            if(button==0){
-                jQuery.event.trigger({ type: 'keyup', which: 40 });
-                gameScene.gamepadHitDown(roxy, down)
-                console.log("gamepad down")
-            }
-            else if(button==1){
-                jQuery.event.trigger({ type: 'keyup', which: 39 });
-                gameScene.gamepadHitRight(roxy, right)
-                console.log("gamepad right")
-
-
-            }
-            else if(button==2){
-                jQuery.event.trigger({ type: 'keyup', which: 37 });
-                gameScene.gamepadHitLeft(roxy, left)
-                console.log("gamepad left")
-
-
-            }
-            else if(button==3){
-                jQuery.event.trigger({ type: 'keyup', which: 38 });
-                gameScene.gamepadHitUp(roxy, up)
-                console.log("gamepad up")
-
-
-            }
-    });
-    listener.start();
-}
-
-window.addEventListener('load', init);
 
 //starting score
 let score=0;
@@ -453,9 +398,8 @@ let gameScene = {
     }, gamepadHitLeft:function(roxy, left)
     {
             left.disableBody(true,true)
-            if(!left){
                 score+=100
-            }
+            
         
 
     },
@@ -463,10 +407,9 @@ let gameScene = {
     gamepadHitRight:function (roxy, right)
     {
             right.disableBody(true,true)
-            if(!right){
                 score+=100
                 scoreText.setText('Score: ' + score);
-            }
+            
         
     
     },
@@ -474,10 +417,9 @@ let gameScene = {
     gamepadHitUp:function (roxy, up)
     {
             up.disableBody(true,true)
-            if(!up){
                 score+=100
                 scoreText.setText('Score: ' + score);
-            }
+            
         
     
     },
@@ -485,10 +427,8 @@ let gameScene = {
     gamepadHitDown:function (roxy, down)
     {
             down.disableBody(true,true)
-            if(!down){
                 score+=100
                 scoreText.setText('Score: ' + score);
-            }       
          
     },
     //this function is called if player misses an enemy
@@ -496,25 +436,21 @@ let gameScene = {
     {
         health-=10
         healthText.setText('Health: ' + health);
-        down.disableBody(true,true)
     },
     loseHealthUp:function (checker,up)
     {
         health-=10
         healthText.setText('Health: ' + health);
-        up.disableBody(true,true)
     },
     loseHealthLeft:function (checker,left)
     {
         health-=10
         healthText.setText('Health: ' + health);
-        left.disableBody(true,true)
     },    
     loseHealthRight:function (checker,right)
     {
         health-=10
         healthText.setText('Health: ' + health);
-        right.disableBody(true,true)
     },
     limitUp: function(down, up){
         down.disableBody(true,true)

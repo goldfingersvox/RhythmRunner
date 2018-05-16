@@ -28,23 +28,27 @@ function init() {
             if(button==0){
                 jQuery.event.trigger({ type: 'keyup', which: 40 });
                 console.log("gamepad down")
+                gameScene.hitDown(roxy,down)
 
             }
             else if(button==1){
                 jQuery.event.trigger({ type: 'keyup', which: 39 });
                 console.log("gamepad right")
+                gameScene.hitRight(roxy,right)
 
 
             }
             else if(button==2){
                 jQuery.event.trigger({ type: 'keyup', which: 37 });
                 console.log("gamepad left")
+                gameScene.hitLeft(roxy,left)
 
 
             }
             else if(button==3){
                 jQuery.event.trigger({ type: 'keyup', which: 38 });
                 console.log("gamepad up")
+                gameScene.hitUp(roxy,up)
 
 
             }
