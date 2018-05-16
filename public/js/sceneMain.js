@@ -385,7 +385,7 @@ let gameScene = {
 
     hitDown:function (roxy, down)
     {
-        this.input.gamepad.on('keydown_DOWN', () => {
+        this.input.keyboard.on('keydown_DOWN', () => {
             down.disableBody(true,true)
             if(!down){
                 score+=100
