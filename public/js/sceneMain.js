@@ -485,7 +485,7 @@ let gameOver= {
 
     gameovertext = this.add.text(450, 250, 'Game Over', { fontSize: '32px', fill: '#ffffff' })
     
-    scoreText = this.add.text(450, 150, 'score:' +score, { fontSize: '32px', fill: '#000' })
+    scoreText = this.add.text(450, 150, 'score:' +score, { fontSize: '32px', fill: '#ffffff' })
 
 
 
