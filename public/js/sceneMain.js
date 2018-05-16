@@ -258,7 +258,7 @@ let gameScene = {
             this.physics.add.overlap(roxy, downs, gameScene.hitDown, null, this);
             this.physics.add.overlap(roxy, lefts, gameScene.hitLeft, null, this);
             this.physics.add.overlap(roxy, rights, gameScene.hitRight, null, this);
-        }
+        
         
 
         //these overlaps help determine if the player loses health since the enemies got past them
