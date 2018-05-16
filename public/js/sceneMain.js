@@ -397,6 +397,7 @@ let gameScene = {
 
         });
         if (cursors.left.isDown){
+            console.log("left")
             score+=100
             scoreText.setText('Score: ' + score);
         }
@@ -406,10 +407,12 @@ let gameScene = {
     hitRight:function (roxy, right)
     {
         this.input.keyboard.on('keydown_RIGHT', () => {
-            right.disableBody(true,true)
+            
 
         });
         if (cursors.right.isDown){
+            right.disableBody(true,true)
+            console.log("right")
             score+=100
             scoreText.setText('Score: ' + score);
         }
@@ -423,6 +426,7 @@ let gameScene = {
 
         });
         if (cursors.up.isDown){
+            console.log("up")
             score+=100
             scoreText.setText('Score: ' + score);
         }
@@ -437,6 +441,7 @@ let gameScene = {
    
          });
          if (cursors.down.isDown){
+            console.log("down")
             score+=100
             scoreText.setText('Score: ' + score);
             }   
