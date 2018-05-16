@@ -28,20 +28,27 @@ function init() {
             if(button==0){
                 jQuery.event.trigger({ type: 'keyup', which: 40 });
                 gameScene.gamepadHitDown(roxy, down)
+                console.log("gamepad down")
             }
             else if(button==1){
                 jQuery.event.trigger({ type: 'keyup', which: 39 });
                 gameScene.gamepadHitRight(roxy, right)
+                console.log("gamepad right")
+
 
             }
             else if(button==2){
                 jQuery.event.trigger({ type: 'keyup', which: 37 });
                 gameScene.gamepadHitLeft(roxy, left)
+                console.log("gamepad left")
+
 
             }
             else if(button==3){
                 jQuery.event.trigger({ type: 'keyup', which: 38 });
                 gameScene.gamepadHitUp(roxy, up)
+                console.log("gamepad up")
+
 
             }
     });
@@ -181,7 +188,6 @@ let gameScene = {
         roxy.setCollideWorldBounds(true);
 
         //loading in the text for the score
-        scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
 
         //loading in the text for the health
         healthText = this.add.text(16, 40, 'health: 100', { fontSize: '32px', fill: '#000' });
@@ -394,13 +400,13 @@ let gameScene = {
     {
         this.input.keyboard.on('keydown_LEFT', () => {
             left.disableBody(true,true)
+            if (cursors.left.isDown){
+                console.log("left")
+                score+=100
+                }  
 
         });
-        if (cursors.left.isDown){
-            console.log("left")
-            score+=100
-            scoreText.setText('Score: ' + score);
-        }
+
 
     },
 
@@ -414,7 +420,6 @@ let gameScene = {
             right.disableBody(true,true)
             console.log("right")
             score+=100
-            scoreText.setText('Score: ' + score);
         }
     
     },
@@ -428,7 +433,6 @@ let gameScene = {
         if (cursors.up.isDown){
             console.log("up")
             score+=100
-            scoreText.setText('Score: ' + score);
         }
     
     },
@@ -443,7 +447,6 @@ let gameScene = {
          if (cursors.down.isDown){
             console.log("down")
             score+=100
-            scoreText.setText('Score: ' + score);
             }   
 
          //gamepad enemy attack functions
@@ -452,7 +455,6 @@ let gameScene = {
             left.disableBody(true,true)
             if(!left){
                 score+=100
-                scoreText.setText('Score: ' + score);
             }
         
 
@@ -545,7 +547,11 @@ let gameOver= {
 
     create:function(){
 
-    gameovertext = this.add.text(450, 250, 'Game Over', { fontSize: '32px', fill: '#ffffff' });
+    gameovertext = this.add.text(450, 250, 'Game Over', { fontSize: '32px', fill: '#ffffff' })
+    
+    scoreText = this.add.text(450, 150, 'score:' +score, { fontSize: '32px', fill: '#000' })
+
+
 
 
     },
