@@ -256,10 +256,10 @@ let gameScene = {
         
 
         //these overlaps help determine if the player loses health since the enemies got past them
-        this.physics.add.collider(checker, rights, gameScene.loseHealthRight, null, this);
-        this.physics.add.collider(checker, downs, gameScene.loseHealthDown, null, this);
-        this.physics.add.collider(checker, lefts, gameScene.loseHealthLeft, null, this);
-        this.physics.add.collider(checker, rights, gameScene.loseHealthRight, null, this);
+        this.physics.add.overlap(checker, rights, gameScene.loseHealthRight, null, this);
+        this.physics.add.overlap(checker, downs, gameScene.loseHealthDown, null, this);
+        this.physics.add.overlap(checker, lefts, gameScene.loseHealthLeft, null, this);
+        this.physics.add.overlap(checker, rights, gameScene.loseHealthRight, null, this);
 
         //this overlap makes sure you don't get two enemies at once
         this.physics.add.overlap(downs, ups, gameScene.limitUp, null, this);
@@ -429,32 +429,33 @@ let gameScene = {
             down.disableBody(true,true)
                 score+=100
                 scoreText.setText('Score: ' + score);
+            }       
          
     },
     //this function is called if player misses an enemy
     loseHealthDown:function (checker,down)
     {
-        down.disableBody(true,true)
         health-=10
         healthText.setText('Health: ' + health);
+        down.disableBody(true,true)
     },
     loseHealthUp:function (checker,up)
     {
-        up.disableBody(true,true)
         health-=10
         healthText.setText('Health: ' + health);
+        up.disableBody(true,true)
     },
     loseHealthLeft:function (checker,left)
     {
-        left.disableBody(true,true)
         health-=10
         healthText.setText('Health: ' + health);
+        left.disableBody(true,true)
     },    
     loseHealthRight:function (checker,right)
     {
-        right.disableBody(true,true)
         health-=10
         healthText.setText('Health: ' + health);
+        right.disableBody(true,true)
     },
     limitUp: function(down, up){
         down.disableBody(true,true)
