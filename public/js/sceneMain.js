@@ -27,21 +27,21 @@ function init() {
             value = e.detail.value;
             if(button==0){
                 jQuery.event.trigger({ type: 'keyup', which: 40 });
-                gameScene.hitDown()
+                gameScene.gamepadHitDown()
             }
             else if(button==1){
                 jQuery.event.trigger({ type: 'keyup', which: 39 });
-                gameScene.hitRight()
+                gameScene.gamepadHitRight()
 
             }
             else if(button==2){
                 jQuery.event.trigger({ type: 'keyup', which: 37 });
-                gameScene.hitLeft()
+                gameScene.gamepadHitLeft()
 
             }
             else if(button==3){
                 jQuery.event.trigger({ type: 'keyup', which: 38 });
-                gameScene.hitUp()
+                gameScene.gamepadHitUp()
 
             }
     });
@@ -295,15 +295,7 @@ let gameScene = {
         this.physics.add.collider(downs, grounds);
         this.physics.add.collider(roxy, grounds);
 
-        //this conditional tests if there's a gamepad
-        /*if(this.gamepad.total>0){
-            //if there is, run these functions
-            this.physics.add.overlap(roxy, ups, gameScene.gamepadHitUp, null, this);
-            this.physics.add.overlap(roxy, downs, gameScene.gamepadHitDown, null, this);
-            this.physics.add.overlap(roxy, lefts, gameScene.gamepadHitLeft, null, this);
-            this.physics.add.overlap(roxy, rights, gameScene.gamepadHitRight, null, this);
-        }
-        else{*/
+
             //these overlaps help determine if the player hits the enemies on time
             this.physics.add.overlap(roxy, ups, gameScene.hitUp, null, this);
             this.physics.add.overlap(roxy, downs, gameScene.hitDown, null, this);
@@ -402,11 +394,12 @@ let gameScene = {
     {
         this.input.keyboard.on('keydown_LEFT', () => {
             left.disableBody(true,true)
-            if(!left){
-                score+=100
-                scoreText.setText('Score: ' + score);
-            }
+
         });
+        if (cursors.left.isDown){
+            score+=100
+            scoreText.setText('Score: ' + score);
+        }
 
     },
 
@@ -414,11 +407,12 @@ let gameScene = {
     {
         this.input.keyboard.on('keydown_RIGHT', () => {
             right.disableBody(true,true)
-            if(!right){
-                score+=100
-                scoreText.setText('Score: ' + score);
-            }
+
         });
+        if (cursors.right.isDown){
+            score+=100
+            scoreText.setText('Score: ' + score);
+        }
     
     },
 
@@ -426,11 +420,12 @@ let gameScene = {
     {
         this.input.keyboard.on('keydown_UP', () => {
             up.disableBody(true,true)
-            if(!up){
-                score+=100
-                scoreText.setText('Score: ' + score);
-            }
+
         });
+        if (cursors.right.isDown){
+            score+=100
+            scoreText.setText('Score: ' + score);
+        }
     
     },
 
@@ -438,57 +433,57 @@ let gameScene = {
     {
         this.input.keyboard.on('keydown_DOWN', () => {
             down.disableBody(true,true)
-            if(!down){
-                score+=100
-                scoreText.setText('Score: ' + score);
-            }       
+
+   
          });
-    }, /*gamepadHitLeft:function(roxy, left)
+         if (cursors.right.isDown){
+            score+=100
+            scoreText.setText('Score: ' + score);
+            }   
+
+         //gamepad enemy attack functions
+    }, gamepadHitLeft:function(roxy, left)
     {
-        this.input.gamepad.on('keydown_LEFT', () => {
             left.disableBody(true,true)
             if(!left){
                 score+=100
                 scoreText.setText('Score: ' + score);
             }
-        });
+        
 
     },
 
     gamepadHitRight:function (roxy, right)
     {
-        this.input.gamepad.on('keydown_RIGHT', () => {
             right.disableBody(true,true)
             if(!right){
                 score+=100
                 scoreText.setText('Score: ' + score);
             }
-        });
+        
     
     },
 
     gamepadHitUp:function (roxy, up)
     {
-        this.input.gamepad.on('keydown_UP', () => {
             up.disableBody(true,true)
             if(!up){
                 score+=100
                 scoreText.setText('Score: ' + score);
             }
-        });
+        
     
     },
 
     gamepadHitDown:function (roxy, down)
     {
-        this.input.keyboard.on('keydown_DOWN', () => {
             down.disableBody(true,true)
             if(!down){
                 score+=100
                 scoreText.setText('Score: ' + score);
             }       
-         });
-    },*/
+         
+    },
     //this function is called if player misses an enemy
     loseHealthDown:function (checker,down)
     {
