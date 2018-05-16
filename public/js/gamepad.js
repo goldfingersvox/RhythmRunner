@@ -1,3 +1,5 @@
+
+//using gamepad framework to get gamepad to work
 var listener = new GamepadListener({
     analog: false,
     deadZone: 0.3
@@ -24,18 +26,18 @@ function init() {
             pressed = e.detail.pressed ? 'pressed' : 'released',
             value = e.detail.value;
             if(button==0){
-                jQuery.event.trigger({ type: 'keydown', which: 40 });
+                jQuery.event.trigger({ type: 'keyup', which: 40 });
             }
             else if(button==1){
-                jQuery.event.trigger({ type: 'keydown', which: 39 });
+                jQuery.event.trigger({ type: 'keyup', which: 39 });
 
             }
             else if(button==2){
-                jQuery.event.trigger({ type: 'keydown', which: 37 });
+                jQuery.event.trigger({ type: 'keyup', which: 37 });
 
             }
             else if(button==3){
-                jQuery.event.trigger({ type: 'keydown', which: 38 });
+                jQuery.event.trigger({ type: 'keyup', which: 38 });
 
             }
     });
