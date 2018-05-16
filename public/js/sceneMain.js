@@ -429,9 +429,7 @@ let gameScene = {
             down.disableBody(true,true)
                 score+=100
                 scoreText.setText('Score: ' + score);
-            }       
-         
-    },
+            },
     //this function is called if player misses an enemy
     loseHealthDown:function (checker,down)
     {
