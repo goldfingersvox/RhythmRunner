@@ -27,21 +27,21 @@ function init() {
             value = e.detail.value;
             if(button==0){
                 jQuery.event.trigger({ type: 'keyup', which: 40 });
-                gameScene.gamepadHitDown()
+                gameScene.gamepadHitDown(roxy, down)
             }
             else if(button==1){
                 jQuery.event.trigger({ type: 'keyup', which: 39 });
-                gameScene.gamepadHitRight()
+                gameScene.gamepadHitRight(roxy, right)
 
             }
             else if(button==2){
                 jQuery.event.trigger({ type: 'keyup', which: 37 });
-                gameScene.gamepadHitLeft()
+                gameScene.gamepadHitLeft(roxy, left)
 
             }
             else if(button==3){
                 jQuery.event.trigger({ type: 'keyup', which: 38 });
-                gameScene.gamepadHitUp()
+                gameScene.gamepadHitUp(roxy, up)
 
             }
     });
@@ -422,7 +422,7 @@ let gameScene = {
             up.disableBody(true,true)
 
         });
-        if (cursors.right.isDown){
+        if (cursors.up.isDown){
             score+=100
             scoreText.setText('Score: ' + score);
         }
@@ -436,7 +436,7 @@ let gameScene = {
 
    
          });
-         if (cursors.right.isDown){
+         if (cursors.down.isDown){
             score+=100
             scoreText.setText('Score: ' + score);
             }   
