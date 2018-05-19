@@ -85,7 +85,8 @@ $(document).ready(function(err){
             function onTaskFailed(response) {
                 var data = $.parseJSON(response.responseText);
                 var errorMessages = data.errors.map(function(error) { return error.message; });
-            
+                console.log(errorMessages.join(','))
+
                 $('#result').text('Task failed, reason: ' + errorMessages.join(','));
             }
 
