@@ -9,7 +9,7 @@ $(document).ready(function(err){
             console.log(results);
             let songPath2=results
 
-                var accessId = 'ca88977b-8027-4906-b6c6-8c2a10948caf';
+                var accessId = 'dd91c64b-1d0d-4a90-8e13-f08abfd81510';
                 var taskUrl = 'analyze/tempo';
                 var parameters = { blocking: false, format: 'json', access_id: accessId };
 
