@@ -316,6 +316,7 @@ let gameScene = {
     //this function creates up baddies
      createUps:function() {
         let up=ups.create(config.width+10, 400, 'up');
+        up.setScale(0.5)
         up.setCollideWorldBounds(false);
         up.allowGravity = false;
     },
@@ -323,6 +324,7 @@ let gameScene = {
     //this function creates down baddies
     createDowns:function() {
         let down=downs.create(config.width+10, 400, 'down');
+        down.setScale(0.5)
         down.setCollideWorldBounds(false);
         down.allowGravity = false;
     },
@@ -330,6 +332,7 @@ let gameScene = {
     //this function creates right baddies
     createRights:function() {
         let right=rights.create(config.width+10, 400, 'right');
+        right.setScale(0.5)
         right.setCollideWorldBounds(false);
         right.allowGravity = true;
     },
@@ -337,6 +340,7 @@ let gameScene = {
     //this function creates left baddies
     createLefts:function() {
         let left=lefts.create(config.width+10, 400, 'left');
+        left.setScale(0.5)
         left.setCollideWorldBounds(false);
         left.allowGravity = true;
     }, 
@@ -358,12 +362,12 @@ let gameScene = {
     hitRight:function (roxy, right)
     {
         this.input.keyboard.on('keydown_RIGHT', () => {
-            
+            right.disableBody(true,true)
+            console.log("right")
 
         });
         if (cursors.right.isDown){
-            right.disableBody(true,true)
-            console.log("right")
+
             score+=100
         }
     
@@ -394,42 +398,7 @@ let gameScene = {
             score+=100
             }   
 
-         //gamepad enemy attack functions
-    }, gamepadHitLeft:function(roxy, left)
-    {
-            left.disableBody(true,true)
-                score+=100
-            
-        
-
-    },
-
-    gamepadHitRight:function (roxy, right)
-    {
-            right.disableBody(true,true)
-                score+=100
-                scoreText.setText('Score: ' + score);
-            
-        
-    
-    },
-
-    gamepadHitUp:function (roxy, up)
-    {
-            up.disableBody(true,true)
-                score+=100
-                scoreText.setText('Score: ' + score);
-            
-        
-    
-    },
-
-    gamepadHitDown:function (roxy, down)
-    {
-            down.disableBody(true,true)
-                score+=100
-                scoreText.setText('Score: ' + score);
-            },
+        },
     //this function is called if player misses an enemy
     loseHealthDown:function (checker,down)
     {
