@@ -316,7 +316,6 @@ let gameScene = {
     //this function creates up baddies
      createUps:function() {
         let up=ups.create(config.width+10, 400, 'up');
-        up.setScale(0.1)
         up.setCollideWorldBounds(false);
         up.allowGravity = false;
     },
@@ -324,7 +323,6 @@ let gameScene = {
     //this function creates down baddies
     createDowns:function() {
         let down=downs.create(config.width+10, 400, 'down');
-        down.setScale(0.1)
         down.setCollideWorldBounds(false);
         down.allowGravity = false;
     },
@@ -332,7 +330,6 @@ let gameScene = {
     //this function creates right baddies
     createRights:function() {
         let right=rights.create(config.width+10, 400, 'right');
-        right.setScale(0.1)
         right.setCollideWorldBounds(false);
         right.allowGravity = true;
     },
@@ -340,7 +337,6 @@ let gameScene = {
     //this function creates left baddies
     createLefts:function() {
         let left=lefts.create(config.width+10, 400, 'left');
-        left.setScale(0.1)
         left.setCollideWorldBounds(false);
         left.allowGravity = true;
     }, 
