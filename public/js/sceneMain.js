@@ -266,6 +266,11 @@ let gameScene = {
         this.physics.add.overlap(lefts, downs, gameScene.limitLeft, null, this);
         this.physics.add.overlap(rights, downs, gameScene.limitRight, null, this);
 
+        this.physics.add.overlap(ups, ups, gameScene.limit, null, this);
+        this.physics.add.overlap(lefts, lefts, gameScene.limit, null, this);
+        this.physics.add.overlap(rights, rights, gameScene.limit, null, this);
+
+
 
 
     },
@@ -432,6 +437,9 @@ let gameScene = {
     } , 
     limitLeft: function(down, left){
         down.disableBody(true,true)
+    },
+    limit: function(x,x){
+        x.disableBody(true,true);
     },
     //this function plays the song
     playSong: function(){
