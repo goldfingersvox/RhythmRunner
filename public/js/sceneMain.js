@@ -119,9 +119,9 @@ let gameScene = {
         //console.log(config.height)
 
         //adding in main character
-        roxy=this.physics.add.sprite(100, 390, 'roxy')
+        roxy=this.physics.add.sprite(50, 390, 'roxy')
 
-        graph=this.physics.add.static(config.width+10,400, 'background2')
+        graph=this.physics.add.tileSprite(config.width+10,432, 'background2')
 
         //adding in the checker that will know if we miss one
         checker=this.physics.add.sprite(-75,390, 'checker')
