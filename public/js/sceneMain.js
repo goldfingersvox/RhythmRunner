@@ -92,7 +92,8 @@ let gameScene = {
         preload() {
 
         ///loading the background 
-        this.load.image('background', '/assets/background/seamless-pattern-1.jpg');
+        this.load.image('background', '/assets/shattered-island-Recovered.png');
+        this.load.image('background2', './assets/graph.png')
         //loading ground image
         this.load.image("ground", "/assets/ground.png");
         //loading the main protagonist and the JSON attached to her with all the info about the spritesheet
@@ -119,6 +120,8 @@ let gameScene = {
 
         //adding in main character
         roxy=this.physics.add.sprite(100, 390, 'roxy')
+
+        graph=this.physics.add.static(config.width+10,400, 'background2')
 
         //adding in the checker that will know if we miss one
         checker=this.physics.add.sprite(-75,390, 'checker')
@@ -481,8 +484,8 @@ let gameOver= {
 var config = {
 
     type: Phaser.AUTO,
-    width: 1100,
-    height: 500,
+    width: 864,
+    height: 324,
     parent: 'phaser-game',
     physics: {
         default: 'arcade',
