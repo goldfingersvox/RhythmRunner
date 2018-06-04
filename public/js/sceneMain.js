@@ -126,7 +126,6 @@ let gameScene = {
         //adding in the checker that will know if we miss one
         checker=this.physics.add.sprite(-75,390, 'checker')
         
-        grounds.create(550,860, 'ground')
 
         
         //giving her some physics(bounce and making sure she doesn't go off screen)
