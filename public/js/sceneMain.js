@@ -125,8 +125,6 @@ let gameScene = {
 
         //adding in the checker that will know if we miss one
         checker=this.physics.add.sprite(-75,390, 'checker')
-
-        grounds=this.physics.add.staticGroup()
         
         grounds.create(550,860, 'ground')
 
