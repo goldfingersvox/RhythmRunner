@@ -25,7 +25,7 @@ $(document).ready(function(err){
             var taskUrl = 'analyze/melody';
             var parameters = { blocking: false, format: 'json', access_id: accessId };
 
-            songLink= 'https://protected-savannah-39174.herokuapp.com/'+songPath;
+            songLink= 'https://rhythmrunnr2.herokuapp.com/'+songPath;
             //changing the API paramaters and adding in the song (hardcoded for now).
             parameters['detailed_result'] = 'false';
             parameters['input_file'] = songLink;

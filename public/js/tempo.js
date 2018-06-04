@@ -14,7 +14,7 @@ $(document).ready(function(err){
                 var parameters = { blocking: false, format: 'json', access_id: accessId };
 
 
-                let songLink2='https://protected-savannah-39174.herokuapp.com/'+songPath2;
+                let songLink2='https://rhythmrunnr2.herokuapp.com/'+songPath2;
                 // the values for these parameters were taken from the corresponding controls in the demo form
                 parameters['input_file'] = songLink;
                     
